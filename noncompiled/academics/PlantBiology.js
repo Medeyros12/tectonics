@@ -3,7 +3,7 @@
 // All functions within the namespace are static and have no side effects
 // The only data structures allowed are rasters and grid objects
 
-const PlantBiology = {};
+var PlantBiology = {};
 
 // Net Primary Productivity (NPP)
 // This is the net amount of carbon assimilated by plants
@@ -17,15 +17,15 @@ const PlantBiology = {};
 PlantBiology.net_primary_productivities = function(temp, precip, npp_max, result) {
 
     result = result || Float32Raster(temp.grid);
-    const npp = result;
+    var npp = result;
 
     // TODO: perf improvements
-    let npp_temperature = 0;
-    let npp_precip = 0;
+    var npp_temperature = 0;
+    var npp_precip = 0;
 
-    const exp = Math.exp;
-    const min = Math.min;
-    for (let i=0, li=temp.length; i<li; ++i) {
+    var exp = Math.exp;
+    var min = Math.min;
+    for (var i=0, li=temp.length; i<li; ++i) {
         npp_temperature     = 1./(1. + exp(1.315 - (0.5/4.) * (temp[i]-273.15)));                 //temperature limited npp
         npp_precip     = (1. - exp(-(precip[i])/800.));                             //drought limited npp
         npp[i]         = min(npp_temperature, npp_precip);         //realized npp, the most conservative of the two estimates
@@ -56,19 +56,19 @@ PlantBiology.net_primary_productivities = function(temp, precip, npp_max, result
 PlantBiology.leaf_area_indices = function(npp, npp_max, lai_max, result, growth_factor) {
     result = result || Float32Raster(npp.grid);
     
-    const lai = result;
+    var lai = result;
 
     //  This is a growth factor I haven't bothered parameterizing.
     //  If c=1/∞, then npp∝lai
-    const c = growth_factor || 1;
+    var c = growth_factor || 1;
 
-    const exp = Math.exp;
-    const ln = Math.log;
+    var exp = Math.exp;
+    var ln = Math.log;
 
     // this is the factor we introduce so that npp=npp_max when lai=lai_max
-    const k = 1-exp(-c*lai_max) / npp_max;
+    var k = 1-exp(-c*lai_max) / npp_max;
 
-    for (let i=0, li=lai.length; i<li; ++i) {
+    for (var i=0, li=lai.length; i<li; ++i) {
         lai[i] = -ln(1 - k * npp[i])/c;
     }
     return lai;

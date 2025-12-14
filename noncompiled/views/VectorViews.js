@@ -1,28 +1,28 @@
 'use strict';
 
-const vectorViews = {};
+var vectorViews = {};
 vectorViews.disabled    = new DisabledVectorRasterView();
 vectorViews.asthenosphere_velocity = new VectorWorldView( { 
         getField: function (world, flood_fill, scratch1) {
             // scratch represents pressure
-            const pressure = scratch1;
+            var pressure = scratch1;
             // flood_fill does double duty for performance reasons
-            const scratch2 = flood_fill;
-            const field = FluidMechanics.get_fluid_pressures(world.lithosphere.density.value(), pressure, scratch2);
-            const gradient = ScalarField.gradient(field);
+            var scratch2 = flood_fill;
+            var field = FluidMechanics.get_fluid_pressures(world.lithosphere.density.value(), pressure, scratch2);
+            var gradient = ScalarField.gradient(field);
             return gradient;
         } 
     } );
 vectorViews.pos    = new VectorWorldView( { 
     getField: function (world) {
-        const pos = world.grid.pos;
+        var pos = world.grid.pos;
         return pos;
     }
 } );
 vectorViews.pos2    = new VectorWorldView( { 
     getField: function (world) {
-        const rotationMatrix = Matrix3x3.RotationAboutAxis(world.eulerPole.x, world.eulerPole.y, world.eulerPole.z, 1);
-        const pos = VectorField.mult_matrix(world.grid.pos, rotationMatrix);
+        var rotationMatrix = Matrix3x3.RotationAboutAxis(world.eulerPole.x, world.eulerPole.y, world.eulerPole.z, 1);
+        var pos = VectorField.mult_matrix(world.grid.pos, rotationMatrix);
         return pos;
     }
 } );

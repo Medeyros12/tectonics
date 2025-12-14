@@ -11,23 +11,23 @@
 //    Since this requires knowledge of all celestial objects in the universe, 
 //    We only handle this logic in the "Universe" class. 
 function Orbit(parameters) {
-    const self = this;
+    var self = this;
 
     // the average between apoapsis and periapsis
-    const semi_major_axis                 = parameters['semi_major_axis']                 || stop('missing parameter: "semi_major_axis"');
+    var semi_major_axis                    = parameters['semi_major_axis']                 || stop('missing parameter: "semi_major_axis"');
     // the shape of the orbit, where 0 is a circular orbit and >1 is a hyperbolic orbit
-    const eccentricity                    = parameters['eccentricity']                    || 0.;
+    var eccentricity                    = parameters['eccentricity']                     || 0.;
     // the angle (in radians) between the orbital plane and the reference plane (the intersection being known as the "ascending node")
-    const inclination                     = parameters['inclination']                     || 0.;
+    var inclination                        = parameters['inclination']                     || 0.;
     // the angle (in radians) between the ascending node and the periapsis
-    const argument_of_periapsis           = parameters['argument_of_periapsis']           || 0.;
+    var argument_of_periapsis            = parameters['argument_of_periapsis']             || 0.;
     // the angle (in radians) between the prime meridian of the parent and the "ascending node" - the intersection between the orbital plane and the reference plane
-    const longitude_of_ascending_node     = parameters['longitude_of_ascending_node']     || 0.;
+    var longitude_of_ascending_node        = parameters['longitude_of_ascending_node']     || 0.;
     // effective mass of the parent and child bodies
     // We say it is "effective" because sometimes no parent body exists (i.e. galaxies)
     // It is not typically included in textbooks amongst orbital parameters,
     // but it allows us to make statements that concern timing: velocity, period, etc.
-    const effective_combined_mass         = parameters['effective_combined_mass']         || 0.;
+    var effective_combined_mass          = parameters['effective_combined_mass']             || 0.;
 
     this.getParameters = function() {
         return {

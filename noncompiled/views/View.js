@@ -18,11 +18,7 @@ function ThreeJsState() {
     this.camera.position.set(-4, 2, 4);
 
     // transparently support window resize
-    window.addEventListener('resize', function(){
-        this.renderer.setSize( window.innerWidth, window.innerHeight );
-        this.camera.aspect   = window.innerWidth / window.innerHeight;
-        this.camera.updateProjectionMatrix();
-    }.bind(this), false);
+    THREEx.WindowResize.bind(this.renderer, this.camera);
 
     // create a camera contol
     this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
@@ -47,13 +43,13 @@ function ThreeJsState() {
 }
 
 function View(innerWidth, innerHeight, scalarView, vectorView, projectionView) {
-    const gl_state = new ThreeJsState();
+    var gl_state = new ThreeJsState();
     this.gl_state = gl_state;
 
-    let scalarProjectionView = projectionView.clone();
-    let vectorProjectionView = projectionView.clone();
+    var scalarProjectionView = projectionView.clone();
+    var vectorProjectionView = projectionView.clone();
 
-    const options = {
+    var options = {
         ocean_visibility: 1.0,
         sediment_visibility: 1.0,
         plant_visibility: 1.0,
@@ -69,30 +65,30 @@ function View(innerWidth, innerHeight, scalarView, vectorView, projectionView) {
 
     this.update = function(sim){
 
-        const universe = sim.model();
-        const body = sim.focus();
-        const stars = Object.values(universe.bodies).filter(body => body instanceof Star);
-        const star_sample_positions_map_ = universe.star_sample_positions_map(universe.config, body, sim.speed/2, 9);
+        var universe = sim.model();
+        var body = sim.focus();
+        var stars = Object.values(universe.bodies).filter(body => body instanceof Star);
+        var star_sample_positions_map_ = universe.star_sample_positions_map(universe.config, body, sim.speed/2, 9);
 
-        const light_rgb_intensities = [];
-        const light_directions = [];
-        for (let star of stars){
-            const star_memos = Star.get_memos(star);
-            const star_sample_positions = star_sample_positions_map_[star.id];
-            for (let star_sample_position of star_sample_positions) {
-                const light_distance = Vector.magnitude(
+        var light_rgb_intensities = [];
+        var light_directions = [];
+        for (var star of stars){
+            var star_memos = Star.get_memos(star);
+            var star_sample_positions = star_sample_positions_map_[star.id];
+            for (var star_sample_position of star_sample_positions) {
+                var light_distance = Vector.magnitude(
                     star_sample_position.x,
                     star_sample_position.y,
                     star_sample_position.z
                 );
-                const light_direction = Vector.normalize(
+                var light_direction = Vector.normalize(
                     star_sample_position.x,
                     star_sample_position.y,
                     star_sample_position.z
                 );
-                const light_rgb_intensity = Thermodynamics.solve_rgb_intensity_of_light_emitted_by_black_body(star_memos.surface_temperature());
-                const light_attenuation = SphericalGeometry.get_surface_area(star_memos.radius()) / SphericalGeometry.get_surface_area(light_distance);
-                const light_exposure = 1/star_sample_positions.length;
+                var light_rgb_intensity = Thermodynamics.solve_rgb_intensity_of_light_emitted_by_black_body(star_memos.surface_temperature());
+                var light_attenuation = SphericalGeometry.get_surface_area(star_memos.radius()) / SphericalGeometry.get_surface_area(light_distance);
+                var light_exposure = 1/star_sample_positions.length;
                 light_rgb_intensity.x *= light_attenuation * light_exposure;
                 light_rgb_intensity.y *= light_attenuation * light_exposure;
                 light_rgb_intensity.z *= light_attenuation * light_exposure;
@@ -153,7 +149,7 @@ function View(innerWidth, innerHeight, scalarView, vectorView, projectionView) {
     };
 
     this.getScreenshotDataURL = function() {
-        return gl_state.renderer.domElement.toDataURL("image/png");
+        return THREEx.Screenshot.toDataURL(gl_state.renderer);
     };
 
     this.setScalarView = function(value) {

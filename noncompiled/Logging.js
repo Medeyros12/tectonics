@@ -4,8 +4,8 @@ function stop(message) {
     throw message;
 }
 
-const log_once = (function () {
-    const logged = {};
+var log_once = (function () {
+    var logged = {};
     return function(message) {
         if (!logged[message]) {
             logged[message] = true;
@@ -14,8 +14,8 @@ const log_once = (function () {
     }
 })();
 
-const throw_once = (function () {
-    const thrown = {};
+var throw_once = (function () {
+    var thrown = {};
     return function(message) {
         if (!thrown[message]) {
             thrown[message] = true;
