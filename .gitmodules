@@ -1,0 +1,9 @@
+[submodule "tools/glsl_tools"]
+	path = tools/glsl_tools
+	url = https://github.com/davidson16807/glsl_tools.git
+[submodule "precompiled/academics"]
+	path = precompiled/academics
+	url = https://github.com/davidson16807/tectonics.glsl.git
+[submodule "research"]
+	path = research
+	url = https://github.com/davidson16807/tectonics-research.git

@@ -1,37 +1,33 @@
 'use strict';
 
 function HeatmapRasterView(options) {
-    var invariant_options = options || {};
+    const invariant_options = options || {};
     this.clone = function() {
         return new  HeatmapRasterView(invariant_options);
     }
-    var min = invariant_options['min'] || 0.;
-    var max = invariant_options['max'] || 1.;
-    var scaling = invariant_options['scaling'] || (!invariant_options['min'] && !invariant_options['max']);
-    var chartView = invariant_options['chartView'] || new PdfChartRasterView('land'); 
+    const min = invariant_options['min'] || 0.;
+    const max = invariant_options['max'] || 1.;
+    const scaling = invariant_options['scaling'] || (!invariant_options['min'] && !invariant_options['max']);
+    const chartView = invariant_options['chartView'] || new PdfChartRasterView('land'); 
     this.scaling = scaling;
-    var fragmentShader = fragmentShaders.heatmap;
+    const fragmentShader = fragmentShaders.heatmap;
 
     this.mesh = void 0;
-    var mesh = void 0;
-    var grid = void 0;
-    var uniforms = {};
-    var vertexShader = void 0;
-    var scaled_raster = void 0;
+    let mesh = void 0;
+    let grid = void 0;
+    let uniforms = {};
+    let vertexShader = void 0;
+    let scaled_raster = void 0;
 
 
     function create_mesh(raster, options) {
-        var grid = raster.grid;
-        var faces = grid.faces;
-        var geometry = THREE.BufferGeometryUtils.fromGeometry({
-            faces: grid.faces, 
-            vertices: grid.vertices, 
-            faceVertexUvs: [[]], // HACK: necessary for use with BufferGeometryUtils.fromGeometry
-        });
-        geometry.addAttribute('displacement', Float32Array, faces.length*3, 1);
-        geometry.addAttribute('scalar', Float32Array, faces.length*3, 1);
+        const grid = raster.grid;
+        const faces = grid.faces;
+        const geometry = grid.getBufferGeometry();
+        geometry.addAttribute('displacement', { itemSize: 1, array: new Float32Array( faces.length * 3 * 1 ), __proto__: THREE.BufferAttribute.prototype });
+        geometry.addAttribute('scalar',       { itemSize: 1, array: new Float32Array( faces.length * 3 * 1 ), __proto__: THREE.BufferAttribute.prototype });
 
-        var material = new THREE.ShaderMaterial({
+        const material = new THREE.ShaderMaterial({
             attributes: {
               displacement: { type: 'f', value: null },
               scalar: { type: 'f', value: null }
@@ -126,7 +122,6 @@ function HeatmapRasterView(options) {
     this.removeFromScene = function(gl_state) {
         if (mesh !== void 0) {
             gl_state.scene.remove(mesh);
-            mesh.geometry.dispose();
             mesh.material.dispose();
             mesh = void 0;
             this.mesh = void 0;
