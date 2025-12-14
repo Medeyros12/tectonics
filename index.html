@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/main.css"/>
     <link rel="stylesheet" href="styles/app.css"/>
+    <link rel="stylesheet" href="https://medeyros12.github.io/OneCSS/oneui-dark.css"/>
 
     <script src="libraries/vue.js"></script>
     <script src="libraries/Chart.js"></script>
@@ -105,13 +106,13 @@
 <!-- info on screen display -->
 <div id="main-control" class="show collapse control" >
     <div class="vertical-axis-group">
-        <div class="horizontal-axis-group">
-            <span id='age-display' class="form-control input">{{ format_count(elapsed_time).quantity }}</span>
-            <div id='age-units-display' class="input-group-append">
-                <span class="input-group-text age-units">{{ format_count(elapsed_time).unit }}y</span>
+        <div class="floatingToolbarHorizontal" style="margin:10px;">
+            <span class="ouiText" style="font-weight:bold;">{{ format_count(elapsed_time).quantity }}</span>
+            <div class="input-group-append">
+                <span class="ouiText" style="font-weight:bold;">{{ format_count(elapsed_time).unit }}y</span>
             </div>
         </div>
-        <div class="horizontal-axis-group">
+        <div class="floatingToolbarHorizontal" style="margin:10px;">
             <div class="input-group-prepend">
                 <span class="input-group-text play" v-on:click="togglePause()">
                     <img src="icons/pause.svg" v-if="!paused"/>
@@ -125,7 +126,7 @@
                 </span>
             </div>
             <div class="input-group-append">
-                <span id="speed-display" class="input-group-text">
+                <span class="input-group-text">
                     {{speeds[speed_i].name}}
                     <span class="instructions">&lt;/&gt;</span>
                 </span>
@@ -133,20 +134,20 @@
         </div>
     </div>
 
-    <div class="short-axis-group">
-        <button type="button" class="btn" data-toggle="collapse" data-target=".tune-control, #main-control">
+    <div class="floatingToolbarVertical">
+        <button type="button" class="toolbarButtom ripple" data-toggle="collapse" data-target=".tune-control, #main-control">
             <img src="icons/tune.svg"/>
             Tune 
         </button>
-        <button type="button" class="btn" data-toggle="collapse" data-target="#view-control, #main-control">
+        <button type="button" class="toolbarButtom ripple" data-toggle="collapse" data-target="#view-control, #main-control">
             <img src="icons/eye.svg"/>
             View 
         </button>
-        <button type="button" class="btn" data-toggle="collapse" data-target="#file-control, #main-control">
+        <button type="button" class="toolbarButtom ripple" data-toggle="collapse" data-target="#file-control, #main-control">
             <img src="icons/folder.svg"/>
             File 
         </button>
-        <button onClick="window.location.reload();">⟳</button>
+        <button type="button" class="toolbarButtom ripple" onClick="window.location.reload();">⟳</button>
     </div>
 </div>
 
