@@ -556,7 +556,7 @@
         }
 
         
-        var resolution_level = Math.min(6, parseInt(querystring['resolution_level'] || '5'));
+        var resolution_level = Math.min(6, parseInt(querystring['resolution_level'] || '6'));
         autosave_period      = parseInt(querystring['autosave']   || '0');
 
         view = new View(
@@ -1190,7 +1190,7 @@
         supercontinentBreakup : 1,
         seed                  : '',
         isSeedCopied          : 0,
-        resolution_level      : 5,
+        resolution_level      : 6,
         cell_count            : 0,
         axial_tilt_degrees    : 23.5,
         log10_day_length      : Math.log10(Units.DAY),
