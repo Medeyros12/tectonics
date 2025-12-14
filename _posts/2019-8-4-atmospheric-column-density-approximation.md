@@ -81,13 +81,13 @@ We need some way to switch between these two integral solutions seamlessly. We f
 
 <p>After <a href="https://www.desmos.com/calculator/iht5vlwov8">some trial and error</a>, I found `Ch approx sqrt(pi/2 (x^2 + z))` works to a suitable approximation, but for those who want more accuracy for a little less performance, it's best to simply to add a linear term onto `Ch||`:</p>
 
-<p>`Ch approx (1/(2 sqrt(x^2+z^2))+1) sqrt(1/2 pi sqrt(x^2+z^2))  + ax`</p>
+<p>`Ch approx (1/(2 sqrt(x^2+z^2))+1) sqrt(1/2 pi z)  + ax`</p>
 
 <p>where I set `a = 0.6`</p>
 
-<p>So in other words, all we're really doing is a modified integration by substitution using the "<a href="https://math.stackexchange.com/questions/1785715/finding-properties-of-operation-defined-by-x%E2%8A%95y-frac1-frac1x-frac1y">o-plus</a>" operation between `h'` and `Ch|| + ax` to prevent division by zero. </p>
+<p>So in other words, all we're really doing is a modified integration by substitution using the "<a href="https://math.stackexchange.com/questions/1785715/finding-properties-of-operation-defined-by-x%E2%8A%95y-frac1-frac1x-frac1y">o-plus</a>" operation between `1/h'` and `Ch|| + ax` to prevent division by zero. </p>
 
-<p>`I = int_A^L exp(R-sqrt(x^2 + z^2)) dx approx (h' oplus Ch) exp(R-sqrt(x^2 + z^2))`</p>
+<p>`I = int_A^L exp(R-sqrt(x^2 + z^2)) dx approx (1/h' oplus Ch) exp(R-sqrt(x^2 + z^2))`</p>
 
 <p>O-plus turns out to be pretty useful for preventing division by 0, in general.</p>
 
