@@ -146,6 +146,7 @@
             <img src="icons/folder.svg"/>
             File 
         </button>
+        <button onClick="window.location.reload();">⟳</button>
     </div>
 </div>
 
@@ -561,9 +562,9 @@
         view = new View(
             window.innerWidth, 
             window.innerHeight,
-            scalarViews.satellite, 
+            scalarViews.plates, 
             vectorViews.disabled, 
-            projectionViews.orthographic,
+            projectionViews.equirectangular,
         );
 
         onSimLoadStart.fire();
@@ -938,8 +939,8 @@
     var timeMenuVue = new Vue({
       el: '#main-control',
       data: {
-            paused: false,
-            speed_i: 1,
+            paused: true,
+            speed_i: 12,
             speeds: [
                 {    name:'1s/s',      scale: 1,               },
                 {    name:'1m/s',      scale: 60,              },
@@ -1015,7 +1016,7 @@
         sediment_target: 1,
         plant: 1,
         plant_target: 1,
-        scalarViewSelected: 'satellite',
+        scalarViewSelected: 'plates',
         scalarViewOptions: [
           {name: 'Satellite', value: 'satellite', icon: 'icons/satellite-variant.svg' },
           {name: 'Topographic map', value: 'topographic', icon: 'icons/terrain.svg'},
@@ -1037,7 +1038,7 @@
           // { name: "Plate Motion", value: "plate_velocity", icon: "icons/plate-motion.svg" },
           { name: "Wind Speed", value: "surface_air_velocity", icon: "icons/air-flow.svg" },
         ],
-        projectionSelected: 'orthographic',
+        projectionSelected: 'equirectangular',
         projectionOptions: [
           { name: "Globe", value: "orthographic", icon: "icons/earth.svg" },
           { name: "Map", value: "equirectangular", icon: "icons/map.svg" },
@@ -1348,7 +1349,7 @@
     // HACK: not sure why, but initializing speed at 1m/s will cause 
     //  display to break when user increases speed past 1wk/s.
     // We set speed to 1m/s here to work around this.
-    timeMenuVue.speed(1)
+    timeMenuVue.speed(12)
 
     // once everything is loaded, instruct the user how to start
     dialogVue.notify("click ▶▶ or press > to begin")
