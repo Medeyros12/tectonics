@@ -14,17 +14,21 @@
     <link rel="stylesheet" href="styles/main.css"/>
     <link rel="stylesheet" href="styles/app.css"/>
 
-    <script src="libraries/jquery-1.10.2.min.js"></script>
     <script src="libraries/vue.js"></script>
     <script src="libraries/Chart.js"></script>
     <script src="libraries/vue-charts.js"></script>
+    <script src="libraries/jquery-1.10.2.min.js"></script>
     <script src="libraries/bootstrap.bundle.min.js"></script>
     <script src="libraries/three.js/Three.js"></script>
     <script src="libraries/three.js/OrbitControls.js"></script>
+    <script src="libraries/three.js/BufferGeometryUtils.js"></script>
     <script src="libraries/three.js/CopyShader.js"></script>
     <script src="libraries/three.js/EffectComposer.js"></script>
     <script src="libraries/three.js/RenderPass.js"></script>
     <script src="libraries/three.js/ShaderPass.js"></script>
+    <script src="libraries/threex/THREEx.screenshot.js"></script>
+    <script src="libraries/threex/THREEx.FullScreen.js"></script>
+    <script src="libraries/threex/THREEx.WindowResize.js"></script>
     <script src="libraries/Stats.js"></script>
     <script src="libraries/random-0.26.js"></script>
     <script src="libraries/base64-arraybuffer.js"></script>
@@ -142,7 +146,6 @@
             <img src="icons/folder.svg"/>
             File 
         </button>
-        <button onClick="window.location.reload();">⟳</button>
     </div>
 </div>
 
@@ -208,7 +211,16 @@
         <img src="icons/down-arrow.svg"/>
         Return
     </button>
-    
+
+
+    <!-- FULLSCREEN -->
+    <button id="fullscreen" v-if="isFullscreenVisible" type="button" class="btn fullscreen" data-toggle="button" aria-pressed="true" v-on:click="toggleFullscreen()">
+        <img v-if="!isFullscreen" src="icons/fullscreen.svg" />
+        <img v-if="isFullscreen" src="icons/fullscreen-exit.svg"/>
+        {{isFullscreen? 'Exit Fullscreen' : 'Fullscreen'}}
+        <span class="instructions">F11</span>
+    </button>
+
     <!-- SCALAR OPTIONS -->
     <button type="button" 
         class="btn" 
@@ -465,33 +477,24 @@
     // all spatial coordinates are xyz vectors on a unit sphere
     // all angles are in radians
     // all units are in MKS
-    
-    const IS_PROD = false;
-
-    const body_tag = document.getElementsByTagName('body')[0];
-    const drop_dialog_tag = document.getElementById('drop-dialog');
-    const container_tag = document.getElementById('container');
-    const stats_tag = document.getElementById('stats');
-    const header_tag = document.getElementById('header');
-    const hidden_downloader_tag = document.getElementById('hidden-downloader');
-    const hidden_when_loading_tags = document.getElementsByClassName('hidden-when-loading');
 
     if( !window.WebGLRenderingContext ){
         process.exit(1);
     }
 
-    const onSimLoadStart = new Event();
-    const onSimLoadStop  = new Event();
+    var sim, view;
+    var renderStats, updateStats;
+    var IS_PROD = true;
+    var autosave_period;
 
-    let sim, view;
-    let renderStats, updateStats;
-    let autosave_period;
+    var onSimLoadStart   = new Event();
+    var onSimLoadStop    = new Event();
 
     onSimLoadStart.subscribe(function() {
-        for(const tag of hidden_when_loading_tags) { tag.style.display = 'none'; }
+        $('.hidden-when-loading').hide();
     });
     onSimLoadStop.subscribe(function() {
-        for(const tag of hidden_when_loading_tags) { tag.style.display = 'block'; }
+        $('.hidden-when-loading').show();
     });
 
     function loadUrl (url) {
@@ -503,7 +506,7 @@
     }
     function loadFile (file) {
         onSimLoadStart.fire();
-        const reader = new FileReader();
+        var reader = new FileReader();
         reader.onload = function(e) {
             sim = JsonDeserializer.sim(e.target.result);
             onSimLoadStop.fire();
@@ -512,21 +515,21 @@
     }
     function loadImage (file) {
         onSimLoadStart.fire();
-        const reader = new FileReader();
+        var reader = new FileReader();
         reader.onload = function(e) {
-            const data_url = e.target.result;
+            var data_url = e.target.result;
             // create image
-            const image = new Image();
+            var image = new Image();
             // create canvas context from image
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
             context.drawImage(image, 0, 0);
             image.onload = function(){
                 canvas.width  = image.width;
                 canvas.height = image.height;
                 context.drawImage(image,0,0); // Or at whatever offset you like
                 // generate crust from canvas context
-                const elevations = ImageImporter.get_elevations_from_canvas_context(context, sim.focus().grid);
+                var elevations = ImageImporter.get_elevations_from_canvas_context(context, sim.focus().grid);
                 CrustGenerator.get_crust_from_elevations(
                     elevations, 
                     CrustGenerator.modern_earth_attribute_height_maps, 
@@ -542,17 +545,17 @@
 
     // init the scene
     function init(){
-        const querystring = [];
-        const hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&')
-        for(let i = 0; i < hashes.length; i++)
+        var querystring = [];
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&')
+        for(var i = 0; i < hashes.length; i++)
         {
-            const hash = hashes[i].split('=');
+            var hash = hashes[i].split('=');
             querystring.push(hash[0]);
             querystring[hash[0]] = hash[1];
         }
 
         
-        const resolution_level = Math.min(6, parseInt(querystring['resolution_level'] || '5'));
+        var resolution_level = Math.min(6, parseInt(querystring['resolution_level'] || '5'));
         autosave_period      = parseInt(querystring['autosave']   || '0');
 
         view = new View(
@@ -570,15 +573,15 @@
             speed: 3.1*Units.DAY,
         });  
 
-        const star_name_corpus = NameGenerator.tokenize_corpus(NameCorpii.arabic_star_names);
-        const get_star_name = NameGenerator.get_length_distribution_generator(star_name_corpus, 25, {5:1,6:3,7:11,8:3,9:1}, 100);
+        var star_name_corpus = NameGenerator.tokenize_corpus(NameCorpii.arabic_star_names);
+        var get_star_name = NameGenerator.get_length_distribution_generator(star_name_corpus, 25, {5:1,6:3,7:11,8:3,9:1}, 100);
         
-        const planet_name_corpus = NameGenerator.tokenize_corpus(NameCorpii.greek_mythological_names);
-        const get_planet_name = NameGenerator.get_length_distribution_generator(planet_name_corpus, 25, {5:1,6:3,7:11,8:3,9:1}, 100);
-        const focus_name = get_planet_name(sim.random);
+        var planet_name_corpus = NameGenerator.tokenize_corpus(NameCorpii.greek_mythological_names);
+        var get_planet_name = NameGenerator.get_length_distribution_generator(planet_name_corpus, 25, {5:1,6:3,7:11,8:3,9:1}, 100);
+        var focus_name = get_planet_name(sim.random);
         
-        const geometry = new THREE.IcosahedronGeometry(1, resolution_level);
-        const universe = new Universe({
+        var geometry = new THREE.IcosahedronGeometry(1, resolution_level);
+        var universe = new Universe({
             bodies: {
                 'star': {
                     type: 'star',
@@ -592,7 +595,7 @@
                     name: focus_name,
                     grid: { 
                         faces:   geometry.faces.map(f => {  
-                            return {a: f.a, b: f.b, c: f.c}  
+                            return {a: f.a, b: f.b, c: f.c, vertexNormals: f.vertexNormals}  
                             }), 
                         vertices:geometry.vertices.map(v => {  
                             return {x: v.x, y: v.y, z: v.z}  
@@ -653,7 +656,7 @@
                 },
             },
         });
-        const world = universe.bodies['world'];
+        var world = universe.bodies['world'];
         CrustGenerator.get_crust_from_height_ranks(
             SphericalGeometry.get_random_surface_field(world.grid, sim.random), 
             CrustGenerator.modern_earth_hypsography, 
@@ -670,23 +673,23 @@
 
         onSimLoadStop.fire();
 
-        container_tag.appendChild(view.getDomElement());
+        $('#container').append(view.getDomElement());
         
         if(!IS_PROD){
             // add Stats.js - https://github.com/mrdoob/renderStats.js
             renderStats = new Stats();
-            stats_tag.appendChild( renderStats.domElement );
+            $('#stats').append( renderStats.domElement );
 
             updateStats = new Stats();
-            stats_tag.appendChild( updateStats.domElement );
+            $('#stats').append( updateStats.domElement );
 
-            header_tag.style.display = 'none';
+            $('#header').hide();
         }
     }
 
     function autosave() {
         if (!autosave_period) { return; }
-        setTimeout(autosave, 1000*autosave_period);
+        setTimeout(update, 1000*autosave_period);
         saveVue.save();
     }
 
@@ -720,9 +723,9 @@
     
 
     function format_count (num, rollover, precision){
-        const units = ['', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y']
-        let quantity = num;
-        let unit = units.shift();
+        var quantity = num;
+        var units = ['', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y']
+        var unit = units.shift();
         while(quantity > rollover) {
             unit = units.shift();
             quantity /= rollover;
@@ -733,7 +736,7 @@
         };
     }
     function format_time (seconds, precision){
-        const quantity = seconds;
+        var quantity = seconds;
         if (quantity < Units.MINUTE) { 
             return { unit: 's',  quantity:  (quantity/Units.SECOND).toPrecision(precision).toString() }; 
         } else if (quantity < Units.HOUR) {
@@ -747,15 +750,16 @@
         } else if (quantity < Units.YEAR) {
             return { unit: 'mo',  quantity: (quantity/Units.MONTH).toPrecision(precision).toString() }; 
         }
-        const formatted = format_count(quantity/Units.YEAR, 1000, 3);
+        var formatted = format_count(quantity/Units.YEAR, 1000, 3);
         formatted.unit += 'y';
         return formatted;
     }
 
     function download(url, filename) {
-        hidden_downloader_tag.setAttribute('href', url);
-        hidden_downloader_tag.setAttribute('download', filename);
-        hidden_downloader_tag.click();
+        $('#hidden-downloader')
+            .attr('href', url)
+            .attr('download', filename)
+            [0].click();
     }
 
 
@@ -780,35 +784,50 @@
       }
     });
 
-    let last_drag_entered;
-    body_tag.addEventListener('dragover', function(e) {
+    var last_drag_entered;
+    $('body').on(
+        'dragover',
+        function(e) {
             e.preventDefault();
             e.stopPropagation();
-        } );
-    body_tag.addEventListener('dragenter', function(e) {
+        }
+    );
+    $('body').on(
+        'dragenter',
+        function(e) {
             e.preventDefault();
             e.stopPropagation();
+            
             last_drag_entered = e.target;
-            drop_dialog_tag.style.display = 'block';
-        } );
-    body_tag.addEventListener('dragleave', function(e) {
+            $('#drop-dialog').show();
+        }
+    );
+    $('body').on(
+        'dragleave',
+        function(e) {
             e.preventDefault();
             e.stopPropagation();
+            
             if(last_drag_entered == e.target){
-                drop_dialog_tag.style.display = 'none';
+                $('#drop-dialog').hide();
             }
-        } );
-    body_tag.addEventListener('drop', function(e) {
+        }
+    );
+    $('body').on(
+        'drop',
+        function(e) {
             e.preventDefault();
             e.stopPropagation();
-            drop_dialog_tag.style.display = 'none';
+
+            $('#drop-dialog').hide();
             while(!e.dataTransfer && e.originalEvent){
                 e = e.originalEvent;
             }
             loadFile(e.dataTransfer.files[0]);
-        } );
+        }
+    );
 
-    const dialogVue = new Vue({
+    var dialogVue = new Vue({
       el: '#dialogs',
       data: {
           isNoWebGl: false,
@@ -818,7 +837,7 @@
       },
       created: function() {
           this.isNoWebGl = window.WebGLRenderingContext;
-          const _this = this;
+          var _this = this;
           onSimLoadStart.subscribe(function() {
               _this.isLoadingSave = true;
           })
@@ -830,7 +849,7 @@
           notify: function(notification) {
               this.notifications.shift()
               this.notifications.push(notification);
-              const _this = this;
+              var _this = this;
               setInterval(function() {
                   _this.notifications.shift()
               }, 3000);
@@ -838,7 +857,7 @@
       }
     });
     
-    const loadVue = new Vue({
+    var loadVue = new Vue({
       el: '#load',
       methods: {
           load: function() {
@@ -854,35 +873,35 @@
       }
     });
 
-    const saveVue = new Vue({
+    var saveVue = new Vue({
       el: '#save',
       methods: {
-        save(event) {
-            const stringified = JsonSerializer.sim(sim);
-            const blob = new Blob([stringified], {type : 'application/json'});
-            const blobUrl = URL.createObjectURL(blob);
-            const elapsed_time = format_time(sim.elapsed_time);
-            const filename = `${sim.focus().name}-${elapsed_time.quantity}${elapsed_time.unit}.sim`;
-            download(blobUrl, filename);
-        }
+          save(event) {
+            var stringified = JsonSerializer.sim(sim);
+              var blob = new Blob([stringified], {type : 'application/json'});
+              var blobUrl = URL.createObjectURL(blob);
+              var elapsed_time = format_time(sim.elapsed_time);
+              var filename = `${sim.focus().name}-${elapsed_time.quantity}${elapsed_time.unit}.sim`;
+              download(blobUrl, filename);
+          }
       }
     });
 
-    const exportVue = new Vue({
+    var exportVue = new Vue({
       el: '#export',
       methods: {
         csv(event) {
-            const content = CsvExporter.world(sim.focus());
-            const blob = new Blob([content], {type : 'text/csv'});
-            const blobUrl = URL.createObjectURL(blob);
-            const elapsed_time = format_time(sim.elapsed_time);
-            const filename = `${sim.focus().name}-${elapsed_time.quantity}${elapsed_time.unit}.csv`;
+            var content = CsvExporter.world(sim.focus());
+            var blob = new Blob([content], {type : 'text/csv'});
+            var blobUrl = URL.createObjectURL(blob);
+            var elapsed_time = format_time(sim.elapsed_time);
+            var filename = `${sim.focus().name}-${elapsed_time.quantity}${elapsed_time.unit}.csv`;
             download(blobUrl, filename);
         }
       }
     });
 
-    const importVue = new Vue({
+    var importVue = new Vue({
       el: '#import',
       methods: {
           loadImage: function() {
@@ -898,7 +917,7 @@
       }
     });
 
-    const screenshotVue = new Vue({
+    var screenshotVue = new Vue({
       el: '#screenshot',
       data: {
           isEnabled: false,
@@ -908,15 +927,15 @@
       },
       methods: {
           capture(event) {
-              const elapsed_time = format_time(sim.elapsed_time);
-              const dataUrl = view.getScreenshotDataURL();
-              const filename = `${sim.focus().name}-${elapsed_time.quantity}${elapsed_time.unit}.png`
+              var elapsed_time = format_time(sim.elapsed_time);
+              var dataUrl = view.getScreenshotDataURL();
+              var filename = `${sim.focus().name}-${elapsed_time.quantity}${elapsed_time.unit}.png`
               download(dataUrl, filename);
           }
       }
     });
 
-    const timeMenuVue = new Vue({
+    var timeMenuVue = new Vue({
       el: '#main-control',
       data: {
             paused: false,
@@ -940,9 +959,9 @@
             isSeasonVisible: true,
       },
       created: function() {
-          const _this = this;
-          const update_time_period = 0.5;
-          let isLoadingSave = true;
+          var _this = this;
+          var isLoadingSave = true;
+          var update_time_period = 0.5;
 
           function update_time() {
               if (isLoadingSave) { return; }
@@ -983,7 +1002,7 @@
     }
     });
 
-    const scalarViewVue = new Vue({
+    var scalarViewVue = new Vue({
       el: '#view-control',
       data: {
         ocean: 1,
@@ -1027,8 +1046,23 @@
         isFullscreen: false,
         isFullscreenVisible: false,
       },
-      created: function() {},
+      created: function() {
+          if( THREEx.FullScreen.available() ){
+              // allow 'f' to go fullscreen where this feature is supported
+              THREEx.FullScreen.bindKey();
+              this.isFullscreenVisible = true;
+          } 
+      },
       methods: {
+        toggleFullscreen: function() {
+            this.isFullscreen = THREEx.FullScreen.activated();
+            if( this.isFullscreen ){
+                THREEx.FullScreen.cancel();
+            }else{
+                THREEx.FullScreen.request(document.body);
+            }
+            this.isFullscreen = !this.isFullscreen;
+        },
         setProjectionSelected: function(value) {
             if (this.projectionSelected == value) { value = this.projectionOptions[0].value; }
             this.projectionSelected = value;
@@ -1036,13 +1070,13 @@
         },
         setVectorViewSelected: function(value) {
           if (this.selected == value) { value = this.vectorViewOptions[0].value; }
-            const option = this.vectorViewOptions.filter(x => x.value == value)[0];
+            var option = this.vectorViewOptions.filter(x => x.value == value)[0];
             this.selected = value;
             view.setVectorView(vectorViews[value]);
         },
         setScalarViewSelected: function(value) {
             if (this.scalarViewSelected == value) { value = this.scalarViewOptions[0].value; }
-              const option = this.scalarViewOptions.filter(x => x.value == value)[0];
+              var option = this.scalarViewOptions.filter(x => x.value == value)[0];
             this.scalarViewSelected = value;
             view.setScalarView(scalarViews[value]);
         },
@@ -1053,14 +1087,14 @@
         },
         setOcean: function(value) {
             this.ocean_target = value;
-            const v = this;
+            var v = this;
             // TODO: hook this up to actual fps
-            const fps = 30
-            const timestep = 1000/fps;     //milliseconds
-            const duration = 250;         //milliseconds
-            const increment = timestep/duration;
+            var fps = 30
+            var timestep = 1000/fps;     //milliseconds
+            var duration = 250;         //milliseconds
+            var increment = timestep/duration;
             chartVue.setOceanVisibility(value);
-            const timer = setInterval(function() {
+            var timer = setInterval(function() {
                 v.ocean += Math.sign(v.ocean_target - v.ocean) * increment
                 if (Math.abs(v.ocean_target - v.ocean) < 2*increment) {
                   clearInterval(timer); 
@@ -1071,13 +1105,13 @@
         },
         setShadows: function(value) {
             this.night_target = value;
-            const v = this;
+            var v = this;
             // TODO: hook this up to actual fps
-            const fps = 30
-            const timestep = 1000/fps;     //milliseconds
-            const duration = 250;         //milliseconds
-            const increment = timestep/duration;
-            const timer = setInterval(function() {
+            var fps = 30
+            var timestep = 1000/fps;     //milliseconds
+            var duration = 250;         //milliseconds
+            var increment = timestep/duration;
+            var timer = setInterval(function() {
                 v.night += Math.sign(v.night_target - v.night) * increment
                 if (Math.abs(v.night_target - v.night) < 2*increment) {
                   clearInterval(timer); 
@@ -1088,13 +1122,13 @@
         },
         setSnow: function(value) {
             this.snow_target = value;
-            const v = this;
+            var v = this;
             // TODO: hook this up to actual fps
-            const fps         = 30
-            const timestep     = 1000/fps;    //milliseconds
-            const duration     = 250;         //milliseconds
-            const increment = timestep/duration;
-            const timer = setInterval(function() {
+            var fps         = 30
+            var timestep     = 1000/fps;    //milliseconds
+            var duration     = 250;         //milliseconds
+            var increment = timestep/duration;
+            var timer = setInterval(function() {
                 v.snow += Math.sign(v.snow_target - v.snow) * increment
                 if (Math.abs(v.snow_target - v.snow) < 2*increment) {
                   clearInterval(timer); 
@@ -1105,16 +1139,16 @@
         },
         setSediment: function(value) {
             this.sediment_target = value;
-            const v = this;
+            var v = this;
             // TODO: hook this up to actual fps
-            const fps         = 30
-            const timestep     = 1000/fps;    //milliseconds
-            const duration     = 250;         //milliseconds
-            const increment = timestep/duration;
+            var fps         = 30
+            var timestep     = 1000/fps;    //milliseconds
+            var duration     = 250;         //milliseconds
+            var increment = timestep/duration;
             if (v.plant_target > v.sediment_target) {
                 v.setPlant(v.sediment_target);
             }
-            const timer = setInterval(function() {
+            var timer = setInterval(function() {
                 v.sediment += Math.sign(v.sediment_target - v.sediment) * increment
                 if (Math.abs(v.sediment_target - v.sediment) < 2*increment) {
                   clearInterval(timer); 
@@ -1125,16 +1159,16 @@
         },
         setPlant: function(value) {
             this.plant_target = value;
-            const v = this;
+            var v = this;
             // TODO: hook this up to actual fps
-            const fps         = 30
-            const timestep     = 1000/fps;    //milliseconds
-            const duration     = 250;         //milliseconds
-            const increment = timestep/duration;
+            var fps         = 30
+            var timestep     = 1000/fps;    //milliseconds
+            var duration     = 250;         //milliseconds
+            var increment = timestep/duration;
             if (v.plant_target > v.sediment_target) {
                 v.setSediment(v.plant_target);
             }
-            const timer = setInterval(function() {
+            var timer = setInterval(function() {
                 v.plant += Math.sign(v.plant_target - v.plant) * increment
                 if (Math.abs(v.plant_target - v.plant) < 2*increment) {
                   clearInterval(timer); 
@@ -1149,7 +1183,7 @@
       }
     });
 
-    const settingsVue = new Vue({
+    var settingsVue = new Vue({
       el: '#tune-control',
       data: {
         supercontinentBreakup : 1,
@@ -1164,7 +1198,7 @@
         semi_major_axis_au    : 1,
       },
       created: function() {
-          const _this = this;
+          var _this = this;
           onSimLoadStop.subscribe(function() { 
             _this.seed = sim.seed;
             _this.cell_count = sim.focus().grid.vertices.length;
@@ -1188,11 +1222,11 @@
         'resolution_level': function(new_value, old_value) {
             onSimLoadStart.fire();
             // preserve the same exact state of world in every way except grid
-            const world_params = sim.focus().getParameters();
-            const geometry = new THREE.IcosahedronGeometry(1, new_value);
+            var world_params = sim.focus().getParameters();
+            var geometry = new THREE.IcosahedronGeometry(1, new_value);
             world_params.grid = { 
                     faces:   geometry.faces.map(f => {  
-                        return {a: f.a, b: f.b, c: f.c}  
+                        return {a: f.a, b: f.b, c: f.c, vertexNormals: f.vertexNormals}  
                         }), 
                     vertices:geometry.vertices.map(v => {  
                         return {x: v.x, y: v.y, z: v.z}  
@@ -1201,7 +1235,7 @@
             // eliminate anything that would store a raster in a buffer to prevent overflow
             world_params.lithosphere.plates = [];
             world_params.lithosphere.total_crust = undefined;
-            const world = new World(world_params);
+            var world = new World(world_params);
             CrustGenerator.get_crust_from_height_ranks(
                 SphericalGeometry.get_random_surface_field(world.grid, sim.random), 
                 CrustGenerator.modern_earth_hypsography, 
@@ -1210,7 +1244,7 @@
                 world.lithosphere.total_crust
             );
             
-            const universe = sim.model();
+            var universe = sim.model();
             universe.bodies[world.id] = world;
             // HACK: we need to call initialize() on universe again because 
             // it's the only thing that passes the dependencies required by world.
@@ -1239,7 +1273,7 @@
             }
         },
         randomizeCrust: function() {
-            const world = sim.focus();
+            var world = sim.focus();
             CrustGenerator.get_crust_from_height_ranks(
                 SphericalGeometry.get_random_surface_field(world.grid, sim.random), 
                 CrustGenerator.modern_earth_hypsography, 
@@ -1249,7 +1283,7 @@
             );
         },
         copySeed: function() {
-            const copyText = document.getElementById("seed");
+            var copyText = document.getElementById("seed");
             copyText.select();
             document.execCommand("copy");
         }
@@ -1291,7 +1325,7 @@
             }
         },
         created: function() {
-            const _this = this;
+            var _this = this;
             onSimLoadStop.subscribe(function() {
                 view.updateChart(_this.$data, sim, _this.$data);
             });
@@ -1321,4 +1355,3 @@
 </script>
 </body>
 </html>
-V

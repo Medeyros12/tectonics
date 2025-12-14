@@ -5,16 +5,17 @@ function RealisticWorldView(shader_return_value) {
         return new RealisticWorldView(shader_return_value);
     }
 
-    const fragmentShader = fragmentShaders.realistic;
+    var fragmentShader = fragmentShaders.realistic;
         
     this.chartViews = []; 
-    let mesh = void 0;
-    let grid = void 0;
-    let shaderpass_uniforms = {};
-    let renderpass_uniforms = {};
-    let vertexShader = void 0;
+    var added = false;
+    var mesh = void 0;
+    var grid = void 0;
+    var shaderpass_uniforms = {};
+    var renderpass_uniforms = {};
+    var vertexShader = void 0;
     const MAX_LIGHT_COUNT = 9;
-    const shaderpass = new THREE.ShaderPass({
+    var shaderpass = new THREE.ShaderPass({
         uniforms: {
             shaderpass_visibility:             { type: 'f', value: 0 },
             background_rgb_signal_texture:  { type: "t", value: null },
@@ -42,17 +43,21 @@ function RealisticWorldView(shader_return_value) {
     shaderpass.renderToScreen = true;
 
     function create_mesh(world, options) {
-        const grid = world.grid;
-        const faces = grid.faces;
-        const geometry = grid.getBufferGeometry();
-        geometry.addAttribute('displacement',   { itemSize: 1, array: new Float32Array( faces.length * 3 * 1 ), __proto__: THREE.BufferAttribute.prototype });
-        geometry.addAttribute('gradient',       { itemSize: 1, array: new Float32Array( faces.length * 3 * 3 ), __proto__: THREE.BufferAttribute.prototype });
-        geometry.addAttribute('snow_coverage',  { itemSize: 1, array: new Float32Array( faces.length * 3 * 1 ), __proto__: THREE.BufferAttribute.prototype });
-        geometry.addAttribute('surface_temperature', { itemSize: 1, array: new Float32Array( faces.length * 3 * 1 ), __proto__: THREE.BufferAttribute.prototype });
-        geometry.addAttribute('plant_coverage', { itemSize: 1, array: new Float32Array( faces.length * 3 * 1 ), __proto__: THREE.BufferAttribute.prototype });
-        geometry.addAttribute('scalar',         { itemSize: 1, array: new Float32Array( faces.length * 3 * 1 ), __proto__: THREE.BufferAttribute.prototype });
+        var grid = world.grid;
+        var faces = grid.faces;
+        var geometry = THREE.BufferGeometryUtils.fromGeometry({
+            faces: grid.faces, 
+            vertices: grid.vertices, 
+            faceVertexUvs: [[]], // HACK: necessary for use with BufferGeometryUtils.fromGeometry
+        });
+        geometry.addAttribute('displacement',   Float32Array, faces.length*3,   1);
+        geometry.addAttribute('gradient',       Float32Array, faces.length*3*3, 1);
+        geometry.addAttribute('snow_coverage',   Float32Array, faces.length*3,   1);
+        geometry.addAttribute('surface_temperature',   Float32Array, faces.length*3,   1);
+        geometry.addAttribute('plant_coverage', Float32Array, faces.length*3,   1);
+        geometry.addAttribute('scalar',         Float32Array, faces.length*3,   1);
 
-        const material = new THREE.ShaderMaterial({
+        var material = new THREE.ShaderMaterial({
             attributes: {
               displacement: { type: 'f', value: null },
               gradient:     { type: 'v3',value: null },
@@ -129,12 +134,12 @@ function RealisticWorldView(shader_return_value) {
         mesh.geometry.attributes[key].needsUpdate = true;
     }
     function update_renderpass_vector_attribute(key, raster) {
-        const x = raster.x;
-        const y = raster.y;
-        const z = raster.z;
-        const array = mesh.geometry.attributes[key].array;
-        const buffer_array_to_cell = raster.grid.buffer_array_to_cell;
-        for (let i = 0, li = buffer_array_to_cell.length; i < li; i++) {
+        var x = raster.x;
+        var y = raster.y;
+        var z = raster.z;
+        var array = mesh.geometry.attributes[key].array;
+        var buffer_array_to_cell = raster.grid.buffer_array_to_cell;
+        for (var i = 0, li = buffer_array_to_cell.length; i < li; i++) {
             array[i+li*0] = x[buffer_array_to_cell[i]];
             array[i+li*1] = y[buffer_array_to_cell[i]];
             array[i+li*2] = z[buffer_array_to_cell[i]];
@@ -158,25 +163,25 @@ function RealisticWorldView(shader_return_value) {
             gl_state.composer.passes.push(shaderpass);
         } 
 
-        const projection_matrix_inverse = new THREE.Matrix4().getInverse(gl_state.camera.projectionMatrix);
+        var projection_matrix_inverse = new THREE.Matrix4().getInverse(gl_state.camera.projectionMatrix);
 
 
-        const insolation_max = Units.GLOBAL_SOLAR_CONSTANT; // Float32Dataset.max(world.atmosphere.average_insolation);
+        var insolation_max = Units.GLOBAL_SOLAR_CONSTANT; // Float32Dataset.max(world.atmosphere.average_insolation);
 
-        const average_molecular_mass_of_air = 4.8e-26 * Units.KILOGRAM;
-        const molecular_mass_of_water_vapor = 3.0e-26 * Units.KILOGRAM;
-        const atmosphere_temperature = Float32Dataset.average(world.atmosphere.surface_temperature);
-        const atmosphere_scale_height = 
+        var average_molecular_mass_of_air = 4.8e-26 * Units.KILOGRAM;
+        var molecular_mass_of_water_vapor = 3.0e-26 * Units.KILOGRAM;
+        var atmosphere_temperature = Float32Dataset.average(world.atmosphere.surface_temperature);
+        var atmosphere_scale_height = 
             Thermodynamics.BOLTZMANN_CONSTANT * atmosphere_temperature / (world.surface_gravity * average_molecular_mass_of_air);
 
         // earth's surface density times fraction of atmosphere that is not ocean vapor (by mass)
-        const surface_air_rayleigh_scatterer_density = 1.217*Units.KILOGRAM * (1.0 - 1.2e15/5.1e18);
+        var surface_air_rayleigh_scatterer_density = 1.217*Units.KILOGRAM * (1.0 - 1.2e15/5.1e18);
         // earth's surface density times fraction of atmosphere that is ocean vapor (by mass)
-        const surface_air_mie_scatterer_density      = 1.217*Units.KILOGRAM * (      1.2e15/5.1e18);
+        var surface_air_mie_scatterer_density      = 1.217*Units.KILOGRAM * (      1.2e15/5.1e18);
         // NOTE: NOT USED, intended to eventually represent absorption
-        const surface_air_absorber_density = 0;
+        var surface_air_absorber_density = 0;
 
-        const gradient = ScalarField.gradient(world.lithosphere.surface_height.value());
+        var gradient = ScalarField.gradient(world.lithosphere.surface_height.value());
         VectorField.div_scalar(gradient, world.radius, gradient);
 
         // RENDERPASS PROPERTIES -----------------------------------------------

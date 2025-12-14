@@ -1,4 +1,4 @@
-const NameCorpii = {};
+var NameCorpii = {};
 NameCorpii.celestials = [
 " mercury ",
 " venus ",

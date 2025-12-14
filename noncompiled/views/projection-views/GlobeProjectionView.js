@@ -1,8 +1,8 @@
 'use strict';
 
 function GlobeProjectionView() {
-    const vertexShader = vertexShaders.orthographic;
-    let subview = void 0;
+    var vertexShader = vertexShaders.orthographic;
+    var subview = void 0;
     this.clone = function() {
         return new GlobeProjectionView();
     }

@@ -1,7 +1,7 @@
-const JsonSerializer     = {};
+var JsonSerializer     = {};
 JsonSerializer.sim = function (sim) {
 
-    const replacer = function(key, value) {
+    var replacer = function(key, value) {
         if (value !== void 0 && value.constructor === ArrayBuffer) {
             return 'buffer:' + Base64.encode(value);
         }
@@ -10,10 +10,10 @@ JsonSerializer.sim = function (sim) {
 
     return JSON.stringify(sim.getParameters(), replacer);
 }
-const JsonDeserializer = {};
+var JsonDeserializer = {};
 JsonDeserializer.sim = function (json, sim) {
 
-    const reviver = function(key, value) {
+    var reviver = function(key, value) {
         if (typeof value === 'string' && value.startsWith('buffer:')) {
             return Base64.decode(value.substr('buffer:'.length));
         }

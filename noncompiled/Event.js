@@ -6,7 +6,7 @@ function Event() {
 		this.subscribers.push(callback)
 	}
 	this.fire = function(details) {
-		for(const subscriber of this.subscribers){
+		for(var subscriber of this.subscribers){
 			try{
 				subscriber(details);
 			} catch(e){

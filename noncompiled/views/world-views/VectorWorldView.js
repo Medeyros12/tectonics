@@ -1,7 +1,7 @@
 'use strict';
 
 function VectorWorldView(options) {
-    const vectorRasterView = options['vectorRasterView'] || new VectorRasterView({});
+    var vectorRasterView = options['vectorRasterView'] || new VectorRasterView({});
     this.getField = options['getField'];
 
     this.clone = function() {
@@ -19,7 +19,7 @@ function VectorWorldView(options) {
             return;
         }
 
-        const raster = this.getField(world);
+        var raster = this.getField(world);
 
         if (raster === void 0) {
             log_once("VectorView.getField() returned undefined.");
