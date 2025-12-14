@@ -113,24 +113,17 @@
             </div>
         </div>
         <div class="floatingToolbarHorizontal" style="margin:10px;">
-            <div class="input-group-prepend">
-                <span class="input-group-text play" v-on:click="togglePause()">
-                    <img src="icons/pause.svg" v-if="!paused"/>
-                    <img src="icons/play.svg"  v-if="paused"/>
-                </span>
-                <span class="input-group-text" v-on:click="slower()">
-                    <img src="icons/step-forward.svg"/>
-                </span>
-                <span class="input-group-text fast-forward" v-on:click="faster()">
-                    <img src="icons/fast-forward.svg"/>
-                </span>
-            </div>
-            <div class="input-group-append">
-                <span class="input-group-text">
-                    {{speeds[speed_i].name}}
-                    <span class="instructions">&lt;/&gt;</span>
-                </span>
-            </div>
+            <span class="toolbarButtom ripple" v-on:click="togglePause()">
+                <img src="icons/pause.svg" v-if="!paused"/>
+                <img src="icons/play.svg"  v-if="paused"/>
+            </span>
+            <span class="toolbarButtom ripple" v-on:click="slower()">
+                <img src="icons/step-forward.svg"/>
+            </span>
+            <span class="toolbarButtom ripple" v-on:click="faster()">
+                <img src="icons/fast-forward.svg"/>
+            </span>
+            <span class="ouiText">{{speeds[speed_i].name}}</span>
         </div>
     </div>
 
