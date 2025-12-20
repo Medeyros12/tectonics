@@ -1,6 +1,6 @@
 {
-  "short_name": "MDN",
-  "name": "MDN Web Docs",
+  "short_name": "Tectonics",
+  "name": "Tectonics",
   "icons": [
     {
       "src": "blog/icon2025.svg",
@@ -11,6 +11,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "black",
+  "theme_color": "orange",
   "background_color": "white"
 }
