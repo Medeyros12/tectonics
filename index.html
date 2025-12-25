@@ -276,7 +276,7 @@
         v-bind:class="getClass(option.value, scalarViewSelected)" 
         v-bind:data-value="option.value" 
         v-on:click="setScalarViewSelected(option.value)">
-        <img v-bind:src="option.icon"/>
+        <span class="material-symbols-outlined">{{option.icon}}</span>
         {{option.name}}
     </button>
 
@@ -288,7 +288,7 @@
         v-bind:class="getClass(option.value, vectorViewSelected)" 
         v-bind:data-value="option.value" 
         v-on:click="setVectorViewSelected(option.value)">
-        <img v-bind:src="option.icon"/>
+        <span class="material-symbols-outlined">{{option.icon}}</span>
         {{option.name}}
     </button>
 
@@ -299,7 +299,7 @@
         v-bind:class="getClass(option.value, projectionSelected)" 
         v-bind:data-value="option.value" 
         v-on:click="setProjectionSelected(option.value)">
-        <img v-bind:src="option.icon"/>
+        <span class="material-symbols-outlined">{{option.icon}}</span>
         {{option.name}}
     </button>
 </div>
@@ -354,6 +354,10 @@
 
 <div id="world-control" class="world-control collapse control" >
     <div class="short-axis-group">
+        <button type="button" class="btn tune-control" data-toggle="collapse" data-target="#main-control, .tune-control">
+            <span class="material-symbols-outlined">arrow_downward</span>
+            Return
+        </button>
         <div class="long-axis-group slider-label label">
             <div class="btn">
                 <span class="material-symbols-outlined">step_over</span>
@@ -1028,31 +1032,31 @@
         plant_target: 1,
         scalarViewSelected: 'plates',
         scalarViewOptions: [
-          {name: 'Satellite', value: 'satellite', icon: 'icons/satellite-variant.svg' },
-          {name: 'Topographic map', value: 'topographic', icon: 'icons/terrain.svg'},
-          {name: 'Height map', value: 'alt', icon: 'icons/terrain-length.svg'},
-          {name: 'Normal map', value: 'surface_normal_map', icon: 'icons/terrain-arrows.svg'},
-          {name: 'Plant Productivity', value: 'npp', icon: 'icons/leaf.svg'},
-          {name: 'Air Temperature', value: 'temp', icon: 'icons/air-temperature.svg' },
-          {name: 'Air Pressure', value: 'surface_air_pressure', icon: 'icons/air-pressure.svg' },
-          {name: 'Precipitation', value: 'precipitation', icon: 'icons/weather-raining.svg'},
-          {name: 'Crust Age', value: 'age', icon: 'icons/rock-age.svg'},
-          {name: 'Crust Density', value: 'density', icon: 'icons/rock-scale.svg'},
-          {name: 'Crust Thickness', value: 'thickness', icon: 'icons/rock-length.svg'},
-          {name: 'Plates', value: 'plates', icon: 'icons/puzzle.svg'},
+          {name: 'Satellite', value: 'satellite', icon: 'satellite_alt' },
+          {name: 'Topographic map', value: 'topographic', icon: 'landscape'},
+          {name: 'Height map', value: 'alt', icon: 'elevation'},
+          {name: 'Normal map', value: 'surface_normal_map', icon: 'tonality'},
+          {name: 'Plant Productivity', value: 'npp', icon: 'psychiatry'},
+          {name: 'Air Temperature', value: 'temp', icon: 'thermometer' },
+          {name: 'Air Pressure', value: 'surface_air_pressure', icon: 'arrows_input' },
+          {name: 'Precipitation', value: 'precipitation', icon: 'rainy'},
+          {name: 'Crust Age', value: 'age', icon: 'hourglass'},
+          {name: 'Crust Density', value: 'density', icon: 'compress'},
+          {name: 'Crust Thickness', value: 'thickness', icon: 'line_weight'},
+          {name: 'Plates', value: 'plates', icon: 'extension'},
         ],
         vectorViewSelected: 'plate_velocity',
         vectorViewOptions: [
-          { name: "No Arrows", value: "disabled", icon: "icons/none.svg" },
-          { name: "Mantle Flow", value: "asthenosphere_velocity", icon: "icons/fire-flow.svg" },
-          { name: "Plate Motion", value: "plate_velocity", icon: "icons/plate-motion.svg" },
-          { name: "Wind Speed", value: "surface_air_velocity", icon: "icons/air-flow.svg" },
+          { name: "No Arrows", value: "disabled", icon: "block" },
+          { name: "Mantle Flow", value: "asthenosphere_velocity", icon: "heat" },
+          { name: "Plate Motion", value: "plate_velocity", icon: "compare_arrows" },
+          { name: "Wind Speed", value: "surface_air_velocity", icon: "air" },
         ],
         projectionSelected: 'equirectangular',
         projectionOptions: [
-          { name: "Globe", value: "orthographic", icon: "icons/earth.svg" },
-          { name: "Map", value: "equirectangular", icon: "icons/map.svg" },
-          { name: "Texture", value: "texture", icon: "icons/texture.svg" },
+          { name: "Globe", value: "orthographic", icon: "language" },
+          { name: "Map", value: "equirectangular", icon: "map" },
+          { name: "Texture", value: "texture", icon: "texture" },
         ],
         isFullscreen: false,
         isFullscreenVisible: false,
