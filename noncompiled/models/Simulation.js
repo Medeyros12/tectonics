@@ -3,7 +3,7 @@ function Simulation (parameters) {
     var _model                 = void 0;
     var _focus_id              = void 0;
     this.paused             = parameters.paused || false;
-    this.speed                 = parameters.speed || 1;
+    this.speed                 = parameters.speed || 12;
     this.elapsed_time        = parameters.elapsed_time || 0;
     this.seed                 = parameters.seed || 0;
     this.random             = new Random(parseSeed(this.seed));
