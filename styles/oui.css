@@ -1,5 +1,27 @@
 /* Theme=Light, Mini Nav?=Yes, Gradient overflow=No, Shadow=Legacy */
 
+.oui-float_nav{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0px;
+	gap: 10px;
+}
+
+.oui-float_nav.vertical-nav{
+	display   : flex;
+  flex-flow : column nowrap;
+  justify-content: space-evenly;
+	align-items: center;
+}
+
+.oui-float_nav.horizontal-nav{
+	display   : flex;
+  flex-flow : row nowrap;
+  justify-content: space-evenly;
+	align-items: center;
+}
+
 /* Auto layout */
 display: flex;
 flex-direction: column;
