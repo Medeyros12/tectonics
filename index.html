@@ -348,6 +348,11 @@
                     min="1" max="6" step="1">
             </div>
         </div>
+    </div>
+</div>
+
+<div id="world-control" class="tune-control collapse control" >
+    <div class="short-axis-group">
         <div class="long-axis-group slider-label label">
             <div class="btn">
                 <img src="icons/globe-model.svg"/>
@@ -391,6 +396,21 @@
                     min="8.5" max="14.1" step="0.1">
                 <input type="range" v-model="log10_semi_major_axis" class="is-long-axis-horizontal"
                     min="8.5" max="14.1" step="0.1">
+            </div>
+        </div>
+        <div class="long-axis-group slider-label label">
+            <div class="btn">
+                <img src="icons/orbit.svg"/>
+                <div class="vertical-axis-group">
+                    <div>Max Elevation</div>
+                    <div>{{ options.elevation_max }}meters</div>
+                </div>
+            </div>
+            <div class="">
+                <input type="range" v-model="options.elevation_max" class="is-long-axis-vertical slider-vertical" orient="vertical"
+                    min="0" max="22000" step="200">
+                <input type="range" v-model="options.elevation_max" class="is-long-axis-horizontal"
+                    min="0" max="22000" step="200">
             </div>
         </div>
     </div>
