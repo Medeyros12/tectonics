@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Grafika (https://www.grafika.cc/) -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+	<g transform="matrix(1, 0, 0, 1, 12, 12)">
+		<path transform="matrix(0.02500000037252903, 0, 0, 0.02500000037252903, -12, 12)" d="M480,-160 Q346,-160 253,-253 Q160,-346 160,-480 Q160,-614 253,-707 Q346,-800 480,-800 Q549,-800 612,-771.5 Q675,-743 720,-690 L720,-800 L800,-800 L800,-520 L520,-520 L520,-600 L688,-600 Q656,-656 600.5,-688 Q545,-720 480,-720 Q380,-720 310,-650 Q240,-580 240,-480 Q240,-380 310,-310 Q380,-240 480,-240 Q557,-240 619,-284 Q681,-328 706,-400 L790,-400 Q762,-294 676,-227 Q590,-160 480,-160 L480,-160 Z" style="fill:#000000;" />
+	</g>
+</svg>
