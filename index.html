@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel="stylesheet" href="styles/main.css"/>
     <link rel="stylesheet" href="styles/app.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz@30" rel="stylesheet"/>
 
     <script src="libraries/vue.js"></script>
     <script src="libraries/Chart.js"></script>
@@ -116,6 +117,7 @@
         <div class="horizontal-axis-group">
             <div class="input-group-prepend">
                 <span class="input-group-text play" v-on:click="togglePause()">
+                    <span class="material-symbols-outlined" v-if="!paused">play_arrow</span>
                     <img src="icons/pause.svg" v-if="!paused"/>
                     <img src="icons/play.svg"  v-if="paused"/>
                 </span>
@@ -137,6 +139,10 @@
 
     <div class="short-axis-group">
         <button type="button" class="btn" data-toggle="collapse" data-target=".tune-control, #main-control">
+            <img src="icons/tune.svg"/>
+            Tune 
+        </button>
+        <button type="button" class="btn" data-toggle="collapse" data-target=".world-control, #main-control">
             <img src="icons/tune.svg"/>
             Tune 
         </button>
@@ -351,7 +357,7 @@
     </div>
 </div>
 
-<div id="world-control" class="tune-control collapse control" >
+<div id="world-control" class="world-control collapse control" >
     <div class="short-axis-group">
         <div class="long-axis-group slider-label label">
             <div class="btn">
@@ -396,21 +402,6 @@
                     min="8.5" max="14.1" step="0.1">
                 <input type="range" v-model="log10_semi_major_axis" class="is-long-axis-horizontal"
                     min="8.5" max="14.1" step="0.1">
-            </div>
-        </div>
-        <div class="long-axis-group slider-label label">
-            <div class="btn">
-                <img src="icons/orbit.svg"/>
-                <div class="vertical-axis-group">
-                    <div>Max Elevation</div>
-                    <div>{{ options.elevation_max }}meters</div>
-                </div>
-            </div>
-            <div class="">
-                <input type="range" v-model="options.elevation_max" class="is-long-axis-vertical slider-vertical" orient="vertical"
-                    min="0" max="22000" step="200">
-                <input type="range" v-model="options.elevation_max" class="is-long-axis-horizontal"
-                    min="0" max="22000" step="200">
             </div>
         </div>
     </div>
