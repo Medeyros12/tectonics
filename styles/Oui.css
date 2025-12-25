@@ -1,0 +1,657 @@
+/* Theme=Light, Mini Nav?=Yes, Gradient overflow=No, Shadow=Legacy */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 10px;
+
+width: 260px;
+height: 58px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 14;
+flex-grow: 0;
+
+
+/* Floating nav */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 4px 5px;
+gap: 10px;
+
+width: 260px;
+height: 58px;
+
+background: rgba(255, 255, 255, 0.6);
+/* Legacy Shadow */
+box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.05), 0px 0px 3px rgba(0, 0, 0, 0.1), 0px 2px 8px rgba(0, 0, 0, 0.1);
+border-radius: 79px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Icon Container */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+
+width: 250px;
+max-width: 250px;
+height: 50px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Floating nav bar item */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 2px;
+
+width: 50px;
+height: 50px;
+
+background: rgba(248, 249, 248, 0.8);
+border-radius: 39px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Icon with label 8.5 */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 2px;
+
+width: 54px;
+height: 28px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Frame 377 */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 2px 8px;
+gap: 10px;
+
+width: 54px;
+height: 28px;
+
+border-radius: 48px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Shape */
+
+width: 24px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* image */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 16.67%;
+right: 16.67%;
+top: 16.67%;
+bottom: 16.67%;
+
+/* Light/Primary */
+background: #000000;
+
+
+/* Rectangle 60 */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+right: -2px;
+top: -2px;
+
+background: #E65B17;
+border-radius: 3px;
+
+
+/* Floating nav bar item */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 2px;
+
+width: 50px;
+height: 50px;
+
+border-radius: 39px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* Icon with label 8.5 */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 2px;
+
+width: 54px;
+height: 28px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Frame 377 */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 2px 8px;
+gap: 10px;
+
+width: 54px;
+height: 28px;
+
+border-radius: 48px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Shape */
+
+width: 24px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* album */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+
+
+/* vuesax/bold/save-2 */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: 0px;
+top: 0px;
+
+
+
+/* save-2 */
+
+position: absolute;
+width: 24px;
+height: 24px;
+left: 0px;
+top: 0px;
+
+
+
+/* Vector */
+
+box-sizing: border-box;
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+opacity: 0;
+/* Light/Nav */
+border: 1px solid rgba(0, 0, 0, 0.6);
+
+
+/* Vector */
+
+position: absolute;
+left: 8.33%;
+right: 33.33%;
+top: 24.5%;
+bottom: 8.31%;
+
+/* Light/Nav */
+background: rgba(0, 0, 0, 0.6);
+
+
+/* Vector */
+
+position: absolute;
+left: 34.61%;
+right: 8.33%;
+top: 8.33%;
+bottom: 24.5%;
+
+/* Light/Nav */
+background: rgba(0, 0, 0, 0.6);
+
+
+/* Rectangle 60 */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+right: -2px;
+top: -2px;
+
+background: #E65B17;
+border-radius: 3px;
+
+
+/* Floating nav bar item */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 2px;
+
+width: 50px;
+height: 50px;
+
+border-radius: 39px;
+
+/* Inside auto layout */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+
+/* Icon with label 8.5 */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 2px;
+
+width: 54px;
+height: 28px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Frame 377 */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 2px 8px;
+gap: 10px;
+
+width: 54px;
+height: 28px;
+
+border-radius: 48px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Shape */
+
+width: 24px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* bookmark_list */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 21.35%;
+right: 21.35%;
+top: 13.22%;
+bottom: 13.22%;
+
+/* Light/Nav */
+background: rgba(0, 0, 0, 0.6);
+
+
+/* Rectangle 60 */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+right: -2px;
+top: -2px;
+
+background: #E65B17;
+border-radius: 3px;
+
+
+/* Floating nav bar item */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 2px;
+
+width: 50px;
+height: 50px;
+
+border-radius: 39px;
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;
+
+
+/* Icon with label 8.5 */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 2px;
+
+width: 54px;
+height: 28px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Frame 377 */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 2px 8px;
+gap: 10px;
+
+width: 54px;
+height: 28px;
+
+border-radius: 48px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Shape */
+
+width: 24px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* search */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+
+
+/* Vector */
+
+position: absolute;
+left: 13.7%;
+right: 13.7%;
+top: 13.7%;
+bottom: 13.7%;
+
+/* Light/Nav */
+background: rgba(0, 0, 0, 0.6);
+
+
+/* Rectangle 60 */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+right: -2px;
+top: -2px;
+
+background: #E65B17;
+border-radius: 3px;
+
+
+/* Floating nav bar item */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 2px;
+
+width: 50px;
+height: 50px;
+
+border-radius: 39px;
+
+/* Inside auto layout */
+flex: none;
+order: 4;
+flex-grow: 0;
+
+
+/* Icon with label 8.5 */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 2px;
+
+width: 54px;
+height: 28px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Frame 377 */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 2px 8px;
+gap: 10px;
+
+width: 54px;
+height: 28px;
+
+border-radius: 48px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+
+/* Shape */
+
+width: 24px;
+height: 24px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* drawer */
+
+position: absolute;
+left: 0%;
+right: 0%;
+top: 0%;
+bottom: 0%;
+
+
+
+/* Vector */
+
+box-sizing: border-box;
+
+position: absolute;
+left: 17.71%;
+right: 17.71%;
+top: 19.79%;
+bottom: 19.79%;
+
+/* Dark/Primary */
+background: #FFFFFF;
+/* Light/Nav */
+border: 1px solid rgba(0, 0, 0, 0.6);
+
+
+/* Rectangle 60 */
+
+position: absolute;
+visibility: hidden;
+width: 6px;
+height: 6px;
+right: -2px;
+top: -2px;
+
+background: #E65B17;
+border-radius: 3px;
