@@ -339,7 +339,7 @@
                 <span class="material-symbols-outlined">grid_on</span>
                 <div class="vertical-axis-group">
                     <div>Resolution</div>
-                    <div>{{ format_count(cell_count).quantity }}{{ format_count(cell_count).unit }} cells</div>
+                    {{ format_count(cell_count).quantity }}{{ format_count(cell_count).unit }} cells
                 </div>
             </div>
             <div>
@@ -363,7 +363,7 @@
                 <span class="material-symbols-outlined">step_over</span>
                 <div class="vertical-axis-group">
                     <div>Axial Tilt</div>
-                    <div>{{axial_tilt_degrees}}°</div>
+                    {{axial_tilt_degrees}}°
                 </div>
             </div>
             <div class="">
@@ -378,7 +378,7 @@
                 <span class="material-symbols-outlined">routine</span>
                 <div class="vertical-axis-group">
                     <div>Day Length</div>
-                    <div>{{ format_time(day_length).quantity }} {{ format_time(day_length).unit }}</div>
+                    {{ format_time(day_length).quantity }} {{ format_time(day_length).unit }}
                 </div>
             </div>
             <div class="">
@@ -393,7 +393,7 @@
                 <span class="material-symbols-outlined">orbit</span>
                 <div class="vertical-axis-group">
                     <div>Semi-Major Axis</div>
-                    <div>{{ semi_major_axis_au }}A.U.</div>
+                    {{ semi_major_axis_au }}A.U.
                 </div>
             </div>
             <div class="">
