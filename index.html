@@ -116,22 +116,20 @@
         </div>
         <div class="horizontal-axis-group">
             <div class="input-group-prepend">
-                <span class="input-group-text play" v-on:click="togglePause()">
+                <span class="input-group-text" v-on:click="togglePause()">
                     <span class="material-symbols-outlined" v-if="!paused">play_arrow</span>
-                    <img src="icons/pause.svg" v-if="!paused"/>
-                    <img src="icons/play.svg"  v-if="paused"/>
+                    <span class="material-symbols-outlined" v-if="paused">pause</span>
                 </span>
                 <span class="input-group-text" v-on:click="slower()">
-                    <img src="icons/step-forward.svg"/>
+                    <span class="material-symbols-outlined">fast_rewind</span>
                 </span>
-                <span class="input-group-text fast-forward" v-on:click="faster()">
-                    <img src="icons/fast-forward.svg"/>
+                <span class="input-group-text" v-on:click="faster()">
+                    <span class="material-symbols-outlined">fast_forward</span>
                 </span>
             </div>
             <div class="input-group-append">
                 <span id="speed-display" class="input-group-text">
                     {{speeds[speed_i].name}}
-                    <span class="instructions">&lt;/&gt;</span>
                 </span>
             </div>
         </div>
@@ -139,23 +137,23 @@
 
     <div class="short-axis-group">
         <button type="button" class="btn" data-toggle="collapse" data-target=".tune-control, #main-control">
-            <img src="icons/tune.svg"/>
+            <span class="material-symbols-outlined">tune</span>
             Tune 
         </button>
         <button type="button" class="btn" data-toggle="collapse" data-target=".world-control, #main-control">
-            <img src="icons/tune.svg"/>
-            Tune 
+            <span class="material-symbols-outlined">globe</span>
+            World 
         </button>
         <button type="button" class="btn" data-toggle="collapse" data-target="#view-control, #main-control">
-            <img src="icons/eye.svg"/>
+            <span class="material-symbols-outlined">visibility</span>
             View 
         </button>
         <button type="button" class="btn" data-toggle="collapse" data-target="#file-control, #main-control">
-            <img src="icons/folder.svg"/>
+            <span class="material-symbols-outlined">folder</span>
             File 
         </button>
         <button type="button" class="btn" onClick="window.location.reload();">
-            <img src="icons/refresh.svg"/>
+            <span class="material-symbols-outlined">refresh</span>
             Refresh
         </button>
     </div>
@@ -164,38 +162,37 @@
 <div id="file-control" class="collapse control" >
     <div class="short-axis-group">
         <button type="button" class="btn" data-toggle="collapse" data-target="#file-control, #main-control">
-            <img src="icons/down-arrow.svg"/>
+            <span class="material-symbols-outlined">arrow_downward</span>
             Return
         </button>
         <button id="screenshot" v-if="isEnabled" type="button" class="btn" v-on:click="capture" v-on:keyup.p="capture">
-            <img src="icons/camera.svg"/>
+            <span class="material-symbols-outlined">screenshot_frame_2</span>
             Screenshot
-            <span class="instructions">p</span>
         </button>
         <div id="export" class="short-axis-group">
             <button type="button" class="btn" data-toggle="collapse" data-target="#export-menu" aria-haspopup="true" aria-expanded="false">
-                <img src="icons/export.svg"/>
+                <span class="material-symbols-outlined">upload</span>
                 Export
             </button>
             <div id="export-menu" class="collapse">
                 <button type="button" 
                     class="btn" 
                     v-on:click="csv">
-                    <img src="icons/view-list.svg"/>
+                    <span class="material-symbols-outlined">csv</span>
                     CSV
                 </button>
             </div>
         </div>
         <div id="import" class="short-axis-group">
             <button type="button" class="btn" data-toggle="collapse" data-target="#import-menu" aria-haspopup="true" aria-expanded="false">
-                <img src="icons/import.svg"/>
+                <span class="material-symbols-outlined">upload_file</span>
                 Import
             </button>
             <div id="import-menu" class="collapse">
                 <button type="button" 
                     class="btn" 
                     v-on:click="loadImage()">
-                    <img src="icons/image.svg"/>
+                    <span class="material-symbols-outlined">altitude</span>
                     Heightmap
                     <span class="instructions">drag</span>
                     <input id="load-image" ref="loadImage" type="file" v-on:change="loadImagePart2($event.target.files[0])" class="hidden" />
@@ -203,13 +200,13 @@
             </div>
         </div>
         <button id="load" type="button" class="btn load" v-on:click="load()">
-            <img src="icons/upload.svg"/>
+            <span class="material-symbols-outlined">publish</span>
             Load
             <span class="instructions">drag</span>
             <input id="load-input" ref="loadInput" type="file" v-on:change="loadPart2($event.target.files[0])" class="hidden" />
         </button>
         <button id="save" type="button" class="btn"  v-on:click="save">
-            <img src="icons/download.svg"/>
+            <span class="material-symbols-outlined">download</span>
             Save
             <span class="instructions">s</span>
         </button>
@@ -220,15 +217,15 @@
 
     <!-- RETURN -->
     <button type="button" class="btn" data-toggle="collapse" data-target="#view-control, #main-control">
-        <img src="icons/down-arrow.svg"/>
+        <span class="material-symbols-outlined">arrow_downward</span>
         Return
     </button>
 
 
     <!-- FULLSCREEN -->
     <button id="fullscreen" v-if="isFullscreenVisible" type="button" class="btn fullscreen" data-toggle="button" aria-pressed="true" v-on:click="toggleFullscreen()">
-        <img v-if="!isFullscreen" src="icons/fullscreen.svg" />
-        <img v-if="isFullscreen" src="icons/fullscreen-exit.svg"/>
+        <span class="material-symbols-outlined" v-if="!isFullscreen">fullscreen_exit</span>
+        <span class="material-symbols-outlined" v-if="isFullscreen">fullscreen</span>
         {{isFullscreen? 'Exit Fullscreen' : 'Fullscreen'}}
         <span class="instructions">F11</span>
     </button>
@@ -238,7 +235,7 @@
         class="btn" 
         v-bind:class="{'btn-secondary': ocean}" 
         v-on:click="setOcean(!ocean? 1:0)">
-        <img src="icons/water.svg"/>
+        <span class="material-symbols-outlined">water_drop</span>
         Ocean
     </button>
     <button type="button" 
@@ -246,7 +243,7 @@
         v-if="isScalarViewSelected('satellite')"
         v-bind:class="{'btn-secondary': night}" 
         v-on:click="setShadows(!night? 1:0)">
-        <img src="icons/weather-night.svg"/>
+        <span class="material-symbols-outlined">partly_cloudy_night</span>
         Shadows
     </button>
     <button type="button" 
@@ -254,7 +251,7 @@
         v-if="isScalarViewSelected('satellite')"
         v-bind:class="{'btn-secondary': snow}" 
         v-on:click="setSnow(!snow? 1:0)">
-        <img src="icons/snowflake.svg"/>
+        <span class="material-symbols-outlined">ac_unit</span>
         Snow
     </button>
     <button type="button" 
@@ -262,7 +259,7 @@
         v-if="isScalarViewSelected('satellite')"
         v-bind:class="{'btn-secondary': sediment}" 
         v-on:click="setSediment(!sediment? 1:0)">
-        <img src="icons/dirt.svg"/>
+        <span class="material-symbols-outlined">snowing</span>
         Sediment
     </button>
     <button type="button" 
@@ -270,7 +267,7 @@
         v-if="isScalarViewSelected('satellite')"
         v-bind:class="{'btn-secondary': plant}" 
         v-on:click="setPlant(!plant? 1:0)">
-        <img src="icons/leaf.svg"/>
+        <span class="material-symbols-outlined">nature</span>
         Plants
     </button>
     <button type="button" 
@@ -315,12 +312,11 @@
             </div>
             <div class="horizontal-axis-group">
                 <button type="button" class="btn" v-on:click="randomizeCrust">
-                    <img src="icons/dice-6.svg"/>
+                    <span class="material-symbols-outlined">casino</span>
                     Randomize
                 </button>
                 <button type="button" class="btn" v-on:click="copySeed">
-                    <img v-if="!isSeedCopied" src="icons/clipboard-arrow-down.svg"/>
-                    <img v-if="isSeedCopied" src="icons/clipboard-check.svg"/>
+                    <span class="material-symbols-outlined">content_copy</span>
                     Copy Seed
                 </button>
             </div>
@@ -329,19 +325,18 @@
                     class="btn" 
                     v-bind:class="{'btn-secondary': supercontinentBreakup}" 
                     v-on:click="setSupercontinentBreakup(!supercontinentBreakup? 1:0)">
-                    <img src="icons/clock.svg"/>
+                    <span class="material-symbols-outlined">broken_image</span>
                     Supercontinent Breakup
                 </button>
                 <button type="button" class="btn tune-control" data-toggle="collapse" data-target="#main-control, .tune-control">
-                    <img src="icons/down-arrow.svg"/>
+                    <span class="material-symbols-outlined">arrow_downward</span>
                     Return
                 </button>
             </div>
         </div>
         <div class="long-axis-group slider-label label">
             <div class="btn">
-                <!-- <img src="icons/spinner-small.gif"/> -->
-                <img src="icons/grid.svg"/>
+                <span class="material-symbols-outlined">grid_on</span>
                 <div class="vertical-axis-group">
                     <div>Resolution</div>
                     <div>{{ format_count(cell_count).quantity }}{{ format_count(cell_count).unit }} cells</div>
@@ -361,7 +356,7 @@
     <div class="short-axis-group">
         <div class="long-axis-group slider-label label">
             <div class="btn">
-                <img src="icons/globe-model.svg"/>
+                <span class="material-symbols-outlined">step_over</span>
                 <div class="vertical-axis-group">
                     <div>Axial Tilt</div>
                     <div>{{axial_tilt_degrees}}°</div>
@@ -376,7 +371,7 @@
         </div>
         <div class="long-axis-group slider-label label">
             <div class="btn">
-                <img src="icons/day-night.svg"/>
+                <span class="material-symbols-outlined">routine</span>
                 <div class="vertical-axis-group">
                     <div>Day Length</div>
                     <div>{{ format_time(day_length).quantity }} {{ format_time(day_length).unit }}</div>
@@ -391,7 +386,7 @@
         </div>
         <div class="long-axis-group slider-label label">
             <div class="btn">
-                <img src="icons/orbit.svg"/>
+                <span class="material-symbols-outlined">orbit</span>
                 <div class="vertical-axis-group">
                     <div>Semi-Major Axis</div>
                     <div>{{ semi_major_axis_au }}A.U.</div>
@@ -472,11 +467,11 @@
         <iframe width="420" height="315" src="https://www.youtube.com/watch?v=MYMOHkVMIcA" frameborder="0" allowfullscreen></iframe>
     </div>
     <div v-if="isNoJs" class="loading-dialog">
-        <img src="icons/spinner.svg"/>
+        <<span class="material-symbols-outlined">cycle</span>
         <h2>Initializing</h2>
     </div>
     <div v-if="isLoadingSave" class="collapse loading-dialog">
-        <img src="icons/spinner.svg"/>
+        <span class="material-symbols-outlined">cycle</span>
         <h2>Loading</h2>
     </div>
     <div class="notifications-dialog hidden-when-loading">
