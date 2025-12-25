@@ -86,7 +86,7 @@
     <script src="noncompiled/views/ProjectionViews.js"></script>
     <script src="noncompiled/views/RegressionTestViews.js"></script>
     <script src="noncompiled/views/ExperimentalViews.js"></script>
-    <!-- <script src="noncompiled/views/TestViews.js"></script> -->
+    <script src="noncompiled/views/TestViews.js"></script>
     <script src="noncompiled/views/View.js"></script>
 
     <link rel="manifest" href="manifest.json" />
@@ -379,7 +379,7 @@
                     min="4.45" max="7.5" step="0.01">
             </div>
         </div>
-        <!-- <div class="long-axis-group slider-label label">
+        <div class="long-axis-group slider-label label">
             <div class="btn">
                 <img src="icons/orbit.svg"/>
                 <div class="vertical-axis-group">
@@ -393,7 +393,7 @@
                 <input type="range" v-model="log10_semi_major_axis" class="is-long-axis-horizontal"
                     min="8.5" max="14.1" step="0.1">
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
 
@@ -568,7 +568,7 @@
             window.innerWidth, 
             window.innerHeight,
             scalarViews.plates, 
-            vectorViews.disabled, 
+            vectorViews.plate_velocity, 
             projectionViews.equirectangular,
         );
 
@@ -1040,7 +1040,7 @@
         vectorViewOptions: [
           { name: "No Arrows", value: "disabled", icon: "icons/none.svg" },
           { name: "Mantle Flow", value: "asthenosphere_velocity", icon: "icons/fire-flow.svg" },
-          // { name: "Plate Motion", value: "plate_velocity", icon: "icons/plate-motion.svg" },
+          { name: "Plate Motion", value: "plate_velocity", icon: "icons/plate-motion.svg" },
           { name: "Wind Speed", value: "surface_air_velocity", icon: "icons/air-flow.svg" },
         ],
         projectionSelected: 'equirectangular',
@@ -1357,7 +1357,7 @@
     timeMenuVue.speed(12)
 
     // once everything is loaded, instruct the user how to start
-    dialogVue.notify("click ▶▶ or press > to begin")
+    dialogVue.notify("click ▶ or press > to begin")
 </script>
 </body>
 </html>
