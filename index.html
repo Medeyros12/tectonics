@@ -138,24 +138,19 @@
 
     <div class="oui-float_nav vertical-nav">
         <button type="button" class="oui-nav_btn" data-toggle="collapse" data-target=".tune-control, #main-control">
-            <span class="material-symbols-outlined">tune</span>
-            Tune 
+            <span class="material-symbols-outlined">tune</span> 
         </button>
         <button type="button" class="oui-nav_btn" data-toggle="collapse" data-target=".world-control, #main-control">
             <span class="material-symbols-outlined">globe</span>
-            World 
         </button>
         <button type="button" class="oui-nav_btn" data-toggle="collapse" data-target="#view-control, #main-control">
             <span class="material-symbols-outlined">visibility</span>
-            View 
         </button>
         <button type="button" class="oui-nav_btn" data-toggle="collapse" data-target="#file-control, #main-control">
             <span class="material-symbols-outlined">folder</span>
-            File 
         </button>
         <button type="button" class="oui-nav_btn" onClick="window.location.reload();">
             <span class="material-symbols-outlined">refresh</span>
-            Refresh
         </button>
     </div>
 </div>
@@ -164,37 +159,31 @@
     <div class="oui-float_nav vertical-nav">
         <button type="button" class="oui-nav_btn" data-toggle="collapse" data-target="#file-control, #main-control">
             <span class="material-symbols-outlined">arrow_downward</span>
-            Return
         </button>
         <button id="screenshot" v-if="isEnabled" type="button" class="oui-nav_btn" v-on:click="capture" v-on:keyup.p="capture">
             <span class="material-symbols-outlined">screenshot_frame_2</span>
-            Screenshot
         </button>
         <div id="export" class="oui-float_nav vertical-nav">
             <button type="button" class="oui-nav_btn" data-toggle="collapse" data-target="#export-menu" aria-haspopup="true" aria-expanded="false">
                 <span class="material-symbols-outlined">upload</span>
-                Export
             </button>
             <div id="export-menu" class="collapse">
                 <button type="button" 
                     class="oui-nav_btn" 
                     v-on:click="csv">
                     <span class="material-symbols-outlined">csv</span>
-                    CSV
                 </button>
             </div>
         </div>
         <div id="import" class="oui-float_nav vertical-nav">
             <button type="button" class="oui-nav_btn" data-toggle="collapse" data-target="#import-menu" aria-haspopup="true" aria-expanded="false">
                 <span class="material-symbols-outlined">upload_file</span>
-                Import
             </button>
             <div id="import-menu" class="collapse">
                 <button type="button" 
                     class="oui-nav_btn" 
                     v-on:click="loadImage()">
                     <span class="material-symbols-outlined">altitude</span>
-                    Heightmap
                     <span class="instructions">drag</span>
                     <input id="load-image" ref="loadImage" type="file" v-on:change="loadImagePart2($event.target.files[0])" class="hidden" />
                 </button>
@@ -202,13 +191,11 @@
         </div>
         <button id="load" type="button" class="btn load" v-on:click="load()">
             <span class="material-symbols-outlined">publish</span>
-            Load
             <span class="instructions">drag</span>
             <input id="load-input" ref="loadInput" type="file" v-on:change="loadPart2($event.target.files[0])" class="hidden" />
         </button>
         <button id="save" type="button" class="oui-nav_btn"  v-on:click="save">
             <span class="material-symbols-outlined">download</span>
-            Save
             <span class="instructions">s</span>
         </button>
     </div>
@@ -219,7 +206,6 @@
     <!-- RETURN -->
     <button type="button" class="oui-nav_btn" data-toggle="collapse" data-target="#view-control, #main-control">
         <span class="material-symbols-outlined">arrow_downward</span>
-        Return
     </button>
 
 
@@ -237,7 +223,6 @@
         v-bind:class="{'btn-secondary': ocean}" 
         v-on:click="setOcean(!ocean? 1:0)">
         <span class="material-symbols-outlined">water_drop</span>
-        Ocean
     </button>
     <button type="button" 
         class="oui-nav_btn" 
@@ -245,7 +230,6 @@
         v-bind:class="{'btn-secondary': night}" 
         v-on:click="setShadows(!night? 1:0)">
         <span class="material-symbols-outlined">partly_cloudy_night</span>
-        Shadows
     </button>
     <button type="button" 
         class="oui-nav_btn" 
@@ -253,7 +237,6 @@
         v-bind:class="{'btn-secondary': snow}" 
         v-on:click="setSnow(!snow? 1:0)">
         <span class="material-symbols-outlined">ac_unit</span>
-        Snow
     </button>
     <button type="button" 
         class="oui-nav_btn" 
@@ -261,7 +244,6 @@
         v-bind:class="{'btn-secondary': sediment}" 
         v-on:click="setSediment(!sediment? 1:0)">
         <span class="material-symbols-outlined">snowing</span>
-        Sediment
     </button>
     <button type="button" 
         class="oui-nav_btn" 
@@ -269,7 +251,6 @@
         v-bind:class="{'btn-secondary': plant}" 
         v-on:click="setPlant(!plant? 1:0)">
         <span class="material-symbols-outlined">nature</span>
-        Plants
     </button>
     <button type="button" 
         class="oui-nav_btn" 
@@ -278,7 +259,6 @@
         v-bind:data-value="option.value" 
         v-on:click="setScalarViewSelected(option.value)">
         <span class="material-symbols-outlined">{{option.icon}}</span>
-        {{option.name}}
     </button>
 
     <!-- VECTOR OPTIONS -->
@@ -290,7 +270,6 @@
         v-bind:data-value="option.value" 
         v-on:click="setVectorViewSelected(option.value)">
         <span class="material-symbols-outlined">{{option.icon}}</span>
-        {{option.name}}
     </button>
 
     <!-- PROJECTION OPTIONS -->
@@ -301,7 +280,6 @@
         v-bind:data-value="option.value" 
         v-on:click="setProjectionSelected(option.value)">
         <span class="material-symbols-outlined">{{option.icon}}</span>
-        {{option.name}}
     </button>
 </div>
 
@@ -314,11 +292,9 @@
             <div class="oui-float_nav horizontal-nav">
                 <button type="button" class="oui-nav_btn" v-on:click="randomizeCrust">
                     <span class="material-symbols-outlined">casino</span>
-                    Randomize
                 </button>
                 <button type="button" class="oui-nav_btn" v-on:click="copySeed">
                     <span class="material-symbols-outlined">content_copy</span>
-                    Copy Seed
                 </button>
             </div>
             <div class="oui-float_nav horizontal-nav">
@@ -327,11 +303,9 @@
                     v-bind:class="{'btn-secondary': supercontinentBreakup}" 
                     v-on:click="setSupercontinentBreakup(!supercontinentBreakup? 1:0)">
                     <span class="material-symbols-outlined">broken_image</span>
-                    Supercontinent Breakup
                 </button>
                 <button type="button" class="btn tune-control" data-toggle="collapse" data-target="#main-control, .tune-control">
                     <span class="material-symbols-outlined">arrow_downward</span>
-                    Return
                 </button>
             </div>
         </div>
@@ -357,7 +331,6 @@
     <div class="oui-float_nav vertical-nav">
         <button type="button" class="btn world-control" data-toggle="collapse" data-target="#main-control, .world-control">
             <span class="material-symbols-outlined">arrow_downward</span>
-            Return
         </button>
         <div class="long-axis-group slider-label label">
             <div class="oui-nav_btn">
