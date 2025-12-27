@@ -58,14 +58,14 @@ In landscape orientations, it will expand from bottom right to top right.
 In portrait orientations, it will expand from bottom right to bottom left. 
 */
 .control {
-    /* bottom right corner */
+    /* bottom left corner */
     position  : fixed;
     bottom    : 0;
-    right     : 0;
+    left     : 0;
 
-    /* flex, wrap right to left, bottom to top*/
+    /* flex, wrap left to right, bottom to top*/
     display   : flex;
-    flex-flow : row-reverse nowrap;
+    flex-flow : row nowrap;
 
     /* max height should not cause world to become obstructed */
     max-height: 23.6%;
@@ -78,11 +78,11 @@ In portrait orientations, it will expand from bottom right to bottom left.
 @media (pointer: fine), (pointer: none), (orientation: landscape) {
     .control {
         /* 
-        Content should progress from bottom right to top right, and should not wrap.
+        Content should progress from bottom left to top left, and should not wrap.
         content should be aligned to the right side of the screen,
         */
         flex-flow   : column-reverse nowrap;
-        align-items : flex-end;
+        align-items : flex-start;
         /* 
         To prevent obstructing the view of the planet, 
         the content width should resize as necessary. 
@@ -136,6 +136,7 @@ This will be the case regardless of screen orientation.
     flex-flow : column nowrap;
     align-items: center;
     flex: 1 2 auto;
+    background-color: rgba(0,0,0,0);
 }
 .btn img {
     /* we follow google material recommendations for icon size */
@@ -310,6 +311,7 @@ Use it only when you can guarantee the number of components you're dealing with 
     */
     display   : flex;
     flex-flow : column-reverse nowrap;
+    background-color: rgba(0,0,0,0);
 }
 .long-axis-group .btn + .btn,
 .long-axis-group .btn + .long-axis-group,
@@ -501,6 +503,7 @@ remaining screen-specific content is ordered by position on the page
     line-height: 1.5;
     align-items     : center;
     justify-content : space-between;
+    background-color: rgba(0,0,0,0);
 }
 .slider-label img{
     width:  24px;
@@ -625,7 +628,7 @@ This may be used to avoid confusing the user,
   height: auto;
 }
 .label {
-    background-color: buttonface;
+    background-color: rgba(0,0,0,0);
     color: #212529;
     padding: 0.25rem 0.5rem;
     border-radius: 0.2rem;
@@ -717,4 +720,3 @@ It  has no styling and is never meant to be seen.
     text-align  : center;
     border-style: dashed;
 }
-
