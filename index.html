@@ -117,19 +117,19 @@
         </div>
         <div class="oui-float_nav horizontal-nav">
             <div class="input-group-prepend">
-                <span class="input-group-text" v-on:click="togglePause()">
+                <span class="oui-nav_btn" v-on:click="togglePause()">
                     <span class="material-symbols-outlined" v-if="!paused">play_arrow</span>
                     <span class="material-symbols-outlined" v-if="paused">pause</span>
                 </span>
-                <span class="input-group-text" v-on:click="slower()">
+                <span class="oui-nav_btn" v-on:click="slower()">
                     <span class="material-symbols-outlined">fast_rewind</span>
                 </span>
-                <span class="input-group-text" v-on:click="faster()">
+                <span class="oui-nav_btn" v-on:click="faster()">
                     <span class="material-symbols-outlined">fast_forward</span>
                 </span>
             </div>
             <div class="input-group-append">
-                <span id="speed-display" class="input-group-text">
+                <span id="speed-display" class="oui-nav_btn">
                     {{speeds[speed_i].name}}
                 </span>
             </div>
