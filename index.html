@@ -109,13 +109,13 @@
 <!-- info on screen display -->
 <div id="main-control" class="show collapse control" >
     <div class="vertical-axis-group">
-        <div class="horizontal-axis-group">
+        <div class="oui-float_nav horizontal-nav">
             <span id='age-display' class="form-control input">{{ format_count(elapsed_time).quantity }}</span>
             <div id='age-units-display' class="input-group-append">
                 <span class="input-group-text age-units">{{ format_count(elapsed_time).unit }}y</span>
             </div>
         </div>
-        <div class="horizontal-axis-group">
+        <div class="oui-float_nav horizontal-nav">
             <div class="input-group-prepend">
                 <span class="input-group-text" v-on:click="togglePause()">
                     <span class="material-symbols-outlined" v-if="!paused">play_arrow</span>
@@ -136,7 +136,7 @@
         </div>
     </div>
 
-    <div class="short-axis-group">
+    <div class="oui-float_nav vertical-nav">
         <button type="button" class="btn" data-toggle="collapse" data-target=".tune-control, #main-control">
             <span class="material-symbols-outlined">tune</span>
             Tune 
@@ -161,7 +161,7 @@
 </div>
 
 <div id="file-control" class="collapse control" >
-    <div class="short-axis-group">
+    <div class="oui-float_nav vertical-nav">
         <button type="button" class="btn" data-toggle="collapse" data-target="#file-control, #main-control">
             <span class="material-symbols-outlined">arrow_downward</span>
             Return
@@ -170,7 +170,7 @@
             <span class="material-symbols-outlined">screenshot_frame_2</span>
             Screenshot
         </button>
-        <div id="export" class="short-axis-group">
+        <div id="export" class="oui-float_nav vertical-nav">
             <button type="button" class="btn" data-toggle="collapse" data-target="#export-menu" aria-haspopup="true" aria-expanded="false">
                 <span class="material-symbols-outlined">upload</span>
                 Export
@@ -184,7 +184,7 @@
                 </button>
             </div>
         </div>
-        <div id="import" class="short-axis-group">
+        <div id="import" class="oui-float_nav vertical-nav">
             <button type="button" class="btn" data-toggle="collapse" data-target="#import-menu" aria-haspopup="true" aria-expanded="false">
                 <span class="material-symbols-outlined">upload_file</span>
                 Import
@@ -306,12 +306,12 @@
 </div>
 
 <div id="tune-control" class="tune-control collapse control" >
-    <div class="short-axis-group">
+    <div class="oui-float_nav vertical-nav">
         <div class="vertical-axis-group">
-            <div class="horizontal-axis-group">
+            <div class="oui-float_nav horizontal-nav">
                 <input id="seed" v-model="seed" class="form-control"></input>
             </div>
-            <div class="horizontal-axis-group">
+            <div class="oui-float_nav horizontal-nav">
                 <button type="button" class="btn" v-on:click="randomizeCrust">
                     <span class="material-symbols-outlined">casino</span>
                     Randomize
@@ -321,7 +321,7 @@
                     Copy Seed
                 </button>
             </div>
-            <div class="horizontal-axis-group">
+            <div class="oui-float_nav horizontal-nav">
                 <button type="button" 
                     class="btn" 
                     v-bind:class="{'btn-secondary': supercontinentBreakup}" 
@@ -354,7 +354,7 @@
 </div>
 
 <div id="world-control" class="world-control collapse control" >
-    <div class="short-axis-group">
+    <div class="oui-float_nav vertical-nav">
         <button type="button" class="btn world-control" data-toggle="collapse" data-target="#main-control, .world-control">
             <span class="material-symbols-outlined">arrow_downward</span>
             Return
