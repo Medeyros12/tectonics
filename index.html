@@ -109,17 +109,15 @@
 <!-- info on screen display -->
 <div id="main-control" class="show collapse control" >
     <div class="vertical-axis-group">
-        <div class="horizontal-axis-group">
-            <span id='age-display' class="form-control input">{{ format_count(elapsed_time).quantity }}</span>
-            <div id='age-units-display' class="input-group-append">
-                <span class="input-group-text age-units">{{ format_count(elapsed_time).unit }}y</span>
-            </div>
+        <div class="horizontal-axis-group oui-textbox">
+            <span id='age-display' class="oui-text">{{ format_count(elapsed_time).quantity }}</span>
+            <span id='age-units-display' class="oui-text">{{ format_count(elapsed_time).unit }}y</span>
         </div>
         <div class="oui-float_nav horizontal-nav">
-            <span class="oui-nav_btn material-symbols-outlined" v-on:click="togglePause()" v-if="!paused">
+            <span class="oui-nav_btn material-symbols-outlined" v-on:click="togglePause()" v-if="paused">
                 play_arrow
             </span>
-            <span class="oui-nav_btn material-symbols-outlined" v-on:click="togglePause()" v-if="paused">
+            <span class="oui-nav_btn material-symbols-outlined" v-on:click="togglePause()" v-if="!paused">
                 pause
             </span>
             <span class="oui-nav_btn material-symbols-outlined" v-on:click="slower()">
@@ -201,12 +199,9 @@
         arrow_downward
     </button>
     <!-- FULLSCREEN -->
-    <button id="fullscreen" v-if="isFullscreenVisible" type="button" class="oui-nav_btn material-symbols-outlined fullscreen" data-toggle="button" aria-pressed="true" v-on:click="toggleFullscreen()" v-if="!isFullscreen">
-        fullscreen_exit
-        <span class="instructions">F11</span>
-    </button>
-    <button id="fullscreen" v-if="isFullscreenVisible" type="button" class="oui-nav_btn material-symbols-outlined fullscreen" data-toggle="button" aria-pressed="true" v-on:click="toggleFullscreen()" v-if="isFullscreen">
-        fullscreen
+    <button id="fullscreen" v-if="isFullscreenVisible" type="button" class="oui-nav_btn fullscreen" data-toggle="button" aria-pressed="true" v-on:click="toggleFullscreen()">
+        <span v-if="!isFullscreen" class="material-symbols-outlined">fullscreen</span>
+        <span v-if="isFullscreen" class="material-symbols-outlined">fullscreen_exit</span>
         <span class="instructions">F11</span>
     </button>
     <!-- SCALAR OPTIONS -->
@@ -243,7 +238,7 @@
     <div class="short-axis-group">
         <div class="vertical-axis-group">
             <div class="horizontal-axis-group">
-                <input id="seed" v-model="seed" class="form-control"></input>
+                <input id="seed" v-model="seed" class="oui-textbox"></input>
             </div>
             <div class="horizontal-axis-group">
                 <button type="button" class="oui-nav_btn material-symbols-outlined" v-on:click="randomizeCrust">
@@ -265,8 +260,8 @@
         <div class="long-axis-group slider-label label">
             <div class="btn">
                 <span class="material-symbols-outlined">grid_on</span>
-                <div id="cell-count" class="vertical-axis-group">
-                    <div>Resolution</div>
+                <div id="cell-count" class="vertical-axis-group oui-text">
+                    <div class="oui-text">Resolution</div>
                     {{ format_count(cell_count).quantity }}{{ format_count(cell_count).unit }} cells
                 </div>
             </div>
