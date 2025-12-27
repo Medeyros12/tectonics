@@ -107,8 +107,8 @@
     </div>
 </div>
 <!-- info on screen display -->
-<div id="main-control" class="show collapse control" >
-    <div class="vertical-axis-group">
+<div id="main-control" class="show collapse control">
+    <div class="vertical-axis-group" style="margin: 6px 10px 10px 10px; gap: 6px;">
         <div class="horizontal-axis-group oui-textbox">
             <span id='age-display' class="oui-text">{{ format_count(elapsed_time).quantity }}</span>
             <span id='age-units-display' class="oui-text">{{ format_count(elapsed_time).unit }}y</span>
@@ -131,8 +131,7 @@
             </span>
         </div>
     </div>
-
-    <div class="oui-float_nav vertical-nav">
+    <div class="oui-float_nav vertical-nav" style="margin-left: 10px;">
         <button type="button" class="oui-nav_btn material-symbols-outlined" data-toggle="collapse" data-target=".tune-control, #main-control">
             tune
         </button>
