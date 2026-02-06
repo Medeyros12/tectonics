@@ -213,17 +213,6 @@
             <div class="field label round fill middle-align left-align">
                 <input id="seed" v-model="seed" class="padding"></input>
             </div>
-            <div class="horizontal-axis-group">
-                <button class="toolbary vertical small-text" v-on:click="randomizeCrust">
-                    <i>casino</i>
-                    Randomize
-                </button>
-                <button class="toolbary vertical small-text" v-on:click="copySeed">
-                    <i v-if="!isSeedCopied">copy_all</i>
-                    <i v-if="isSeedCopied">content_copy</i>
-                    Copy Seed
-                </button>
-            </div>
         </div>
         <div class="long-axis-group slider-label label">
             <div class="vertical center-align middle-align">
