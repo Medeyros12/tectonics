@@ -214,11 +214,11 @@
                 <input id="seed" v-model="seed" class="padding"></input>
             </div>
             <div class="horizontal-axis-group">
-                <button type="button" class="btn" v-on:click="randomizeCrust">
+                <button class="toolbary vertical small-text" v-on:click="randomizeCrust">
                     <i>casino</i>
                     Randomize
                 </button>
-                <button type="button" class="btn" v-on:click="copySeed">
+                <button class="toolbary vertical small-text" v-on:click="copySeed">
                     <i v-if="!isSeedCopied">copy_all</i>
                     <i v-if="isSeedCopied">content_copy</i>
                     Copy Seed
