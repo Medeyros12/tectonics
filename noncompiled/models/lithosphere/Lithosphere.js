@@ -249,7 +249,7 @@ function Lithosphere(grid, parameters) {
             // CÓDIGO MODIFICADO: OROGENIA ANDINA (FORMAÇÃO DE CADEIAS DE MONTANHAS)
             // Multiplicador de injeção de massa vulcânica. 
             // Placas que afundam trazem rocha do manto junto que derrete e sobe para a crosta.
-            var orogeny_multiplier = 3.5; 
+            var orogeny_multiplier = 7; 
             ScalarField.mult_scalar(globalized_scalar_field, orogeny_multiplier, globalized_scalar_field);
             // -------------------------------------------------------------------------
 
